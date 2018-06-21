@@ -7,8 +7,16 @@ module.exports = function (io) {
             socket.username = data.username;
             socket.join(data.idConversation);
             if(!listRoom[data.idConversation]) listRoom[data.idConversation] = [];
-            listRoom[data.idConversation].push(data.username);
+            let check = false;
+            for(let username of listRoom[data.idConversation]) {
+                if(username==data.username) {
+                    check = true;
+                    break;
+                }
+            }
+            if(!check) listRoom[data.idConversation].push(data.username);
             io.in(data.idConversation).emit('send-members-online', listRoom[data.idConversation]);
+            console.log('a user connect', listRoom);
         });
         socket.on('sendMessage', function (data) {
             io.in(data.idConversation).emit('sendMessage', data);
@@ -16,12 +24,19 @@ module.exports = function (io) {
         socket.on('off-project', function(data) {
             var index = listRoom[data.idConversation].indexOf(data.username);
             listRoom[data.idConversation].splice(index,1);
+            if(!listRoom[data.idConversatio].length) delete listRoom[data.idConversation];
             io.in(data.idConversation).emit('off-project', data);
+            console.log('a user disconnect', listRoom);
         });
         socket.on('disconnect', function() {
-        var index = listRoom[socket.idRoom].indexOf(socket.username);
-        listRoom[socket.idRoom].splice(index,1);
+            var index;
+            if(listRoom[socket.idRoom]) {
+                index = listRoom[socket.idRoom].indexOf(socket.username);
+                listRoom[socket.idRoom].splice(index,1);
+                if(!listRoom[socket.idRoom].length) delete listRoom[socket.idRoom];
+            }
             socket.to(socket.idRoom).emit('disconnected', socket.username);
+            console.log('a user disconnect', listRoom);
         });
     });
 };
