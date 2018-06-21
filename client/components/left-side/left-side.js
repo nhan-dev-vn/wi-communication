@@ -4,7 +4,7 @@ let leftSideModule = 'left-side';
 function Controller(apiService, $timeout, $element){
     let self = this;
     this.$onInit = function() {
-        
+        console.log();
     }
 }
 

@@ -21,7 +21,6 @@ module.exports.getConversation = (req, res) => {
 			Conversation.create({
 				name: req.body.name
 			}).then(conver => {
-				conver.addUsers([1]);
 				res.send(response(200, 'SUCCESSFULLY', {user: req.decoded, conver: conver}));
 			}).catch(err => {
 				res.send(response(400, 'SOMETHING WENT WRONG 2'));
@@ -33,25 +32,19 @@ module.exports.getConversation = (req, res) => {
 	})
 }
 module.exports.getListConversation = (req, res) => {
-	User.findOne({
+	Conversation.findAll({
 		where: {
-			username: req.body.username
+			name: { [Op.like]: 'Help_Desk-%' }
 		},
 		include: {
-			model: Conversation,
-			where: {
-				name: { [Op.like]: 'Help_Desk-%' }
-			},
+			model: Message,
 			include: {
-				model: Message,
-				include: {
-					model: User
-				}
+				model: User
 			}
 		}
-	}).then(user => {
-		if (user) {
-			res.send(response(200, 'SUCCESSFULLY', user));
+	}).then(list => {
+		if (list) {
+			res.send(response(200, 'SUCCESSFULLY', list));
 		} else {
 			res.send(response(400, 'SOMETHING WENT WRONG 2'));
 		}
