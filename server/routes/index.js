@@ -24,6 +24,10 @@ router.post('/message/new', (req,res) => {
 router.post('/conversation', (req, res) => {
 	ctrlConversation.getConversation(req, res);
 });
+//List conversation
+router.post('/list/conversation', (req, res) => {
+	ctrlConversation.getListConversation(req, res);
+})
 //upload
 router.post('/upload', multipartyMiddleware, (req, res) => {
     ctrlUpload.upload(req,res);

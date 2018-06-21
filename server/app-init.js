@@ -5,6 +5,7 @@ const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const routesApi = require('./routes/index');
+const loginApi = require('./routes/login');
 const io = require('socket.io')(server);
 require('./socket.io/socket.io')(io);
 require('./database/db-connect');
@@ -14,6 +15,7 @@ app.use(express.static(path.join(__dirname, '../client')));
 app.use(express.static('database/upload'));
 app.use(bodyParser.json());
 app.use('/api', routesApi);
+app.use('/', loginApi);
 
 module.exports.io = io;
 module.exports.app = app;

@@ -1,0 +1,52 @@
+let moduleName = 'apiServiceModule';
+let serviceName = 'apiService';
+
+const LOGIN = '/login';
+const GET_LIST_CONVERSATION = '/api/list/conversation';
+angular.module(moduleName, []).service(serviceName, function ($http) {
+    
+    let doPost = function(URL, token, data, cb) {
+        $http({
+            method: 'POST',
+            url: URL,
+            headers: {
+                'Authorization': token
+            },
+            data: data
+        }).then(function successCallback(response) {
+                if (response.data.code != 200) {
+                    console.error(response.data.reason);
+                    cb();
+                } else {
+                    cb(response.data.content);
+                }
+        }, function errorCallback(response) {
+            console.error(response);
+            // if(toastr) toastr.error(response);
+            cb();
+        });
+    }
+    
+    this.login = function(data, cb) {
+        $http({
+            method: 'POST',
+            url: LOGIN,
+            data: data
+        }).then(function successCallback(response) {
+            if (response.data.code != 200) {
+                console.error(response.data.reason);
+                cb();
+            } else {
+                cb(response.data.content);
+            }
+        }, function errorCallback(response) {
+            console.error(response);
+            if(toastr) toastr.error(response);
+            cb();
+        });
+    }
+    this.getListConversation = function(token, data, cb) {
+        doPost(GET_LIST_CONVERSATION, token, data, cb);
+    }
+    return this;
+});
