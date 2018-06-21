@@ -24,7 +24,7 @@ module.exports = function (io) {
         socket.on('off-project', function(data) {
             var index = listRoom[data.idConversation].indexOf(data.username);
             listRoom[data.idConversation].splice(index,1);
-            if(!listRoom[data.idConversatio].length) delete listRoom[data.idConversation];
+            if(!listRoom[data.idConversation].length) delete listRoom[data.idConversation];
             io.in(data.idConversation).emit('off-project', data);
             console.log('a user disconnect', listRoom);
         });

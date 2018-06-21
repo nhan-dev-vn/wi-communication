@@ -1,1 +1,30 @@
-right
+<style>
+    ::placeholder {
+        color: #ccc;
+    }
+    textarea:focus {
+        outline: none !important;
+    }
+</style>
+<div style="border-bottom: 1.5px solid #eee; padding-left: 10px; font-size: 18px" class="row">
+    <b style="color: #ccc">To: </b><span style="color: #419be8">{{rightSide.curConver.name}}</span>
+</div>
+<div style="border-bottom: 1px solid #eee; height: 79%;" class="row">
+    <ul>
+        <li ng-repeat="message in rightSide.curConver.Messages">
+            <b>{{message.User.username}}:</b>   {{message.content}}
+        </li>
+    </ul>
+</div>
+<div class="row">
+    <textarea style="width: 100%; border:none; padding-left: 10px; padding-right: 10px" name="" id="" rows="2" placeholder="Enter your message"></textarea>
+</div>
+<div class="row">
+    <div class="col-sm-2">
+        <span class="glyphicon glyphicon-picture" style="color: #419be8; cursor: pointer;font-size: 20px"></span>
+        <span class="glyphicon glyphicon-paperclip" style="color: #419be8; cursor: pointer;font-size: 20px"></span>
+    </div>
+    <div style="float: right" class="col-sm-1">
+        <span class="glyphicon glyphicon-send" style="color: #419be8; cursor: pointer;font-size: 20px"></span>
+    </div>
+</div>

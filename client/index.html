@@ -3,14 +3,19 @@
         <title>Help Desk Chat</title>
         
         <link rel="stylesheet" href="vendor/css/bootstrap.min.css"></link>
+        <link rel="stylesheet" href="vendor/css/style.css">
         <script src="vendor/js/jquery.min.js"></script>
         <script src="vendor/js/angular.min.js"></script>
         <script src="vendor/js/bootstrap.min.js"></script>
-
+        <script src="vendor/js/socket.io.js"></script>
+        
         <script src="js/app.js"></script>
         <script src="services/api-service.js"></script>
         <script src="components/left-side/left-side.js"></script>
         <script src="components/right-side/right-side.js"></script>
+        <script>
+            var socket = io('http://13.251.24.65:5005');
+        </script>
     </head>
     <body ng-app="wi-help-desk-chat" ng-controller="appCtrl">
         <div ng-show="!isLogin" class="container">
@@ -23,15 +28,14 @@
                 <button class="btn-success" ng-click="login(name)">OK</button>
             </form>
         </div>
-        <div ng-show="isLogin" class="container">
-            <div class="row">
-                <div class="col-sm-3">
-                    <left-side username="username" list-conver="listConver"></left-side>
+        <div style="height: 100%;" 
+            ng-show="isLogin" class="container">
+                <div style="height: 100%; border: 1px solid #eee; background: #f5f5f5;" class="col-sm-3">
+                    <left-side username="username" list-conver="listConver" cur-conver="curConver"></left-side>
                 </div>
-                <div class="col-sm-9">
-                    <right-side username="username"></right-side>
+                <div style="height: 100%; border: 1px solid #eee;" class="col-sm-9">
+                    <right-side username="username" list-conver="listConver" cur-conver="curConver"></right-side>
                 </div>
-            </div>
         </div>
     </body>
 </html>

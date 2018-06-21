@@ -12,6 +12,8 @@ appRight.component(rightSideComponent, {
     controller: Controller,
     controllerAs: rightSideComponent,
     bindings: {
-        
+        username: '<',
+        listConver: '<',
+        curConver: '='
     }
 });
