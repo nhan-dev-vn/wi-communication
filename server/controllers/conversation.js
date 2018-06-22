@@ -14,7 +14,7 @@ module.exports.getConversation = (req, res) => {
 				model: User
 			}
 		},
-		order: [[Message, 'createdAt', 'ASC']]
+        order: [[Message, 'createdAt', 'ASC']]
 	}).then(conver => {
 		if (conver) {
 			res.send(response(200, 'SUCCESSFULLY', {user: req.decoded, conver: conver}));
@@ -44,7 +44,7 @@ module.exports.getListConversation = (req, res) => {
 				model: User
 			}
 		},
-		order: [[Message, 'createdAt', 'ASC']]
+        order: [[Message, 'createdAt', 'ASC']]
 	}).then(list => {
 		if (list) {
 			res.send(response(200, 'SUCCESSFULLY', list));
