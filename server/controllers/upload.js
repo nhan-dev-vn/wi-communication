@@ -4,7 +4,12 @@ var jsonResponse = require('./response');
 module.exports.upload = (req, res) => {
     fs.access('./database/upload/' + req.body.name, (err) => {
         if (err)
-            fs.mkdirSync('./database/upload/' + req.body.name);
+            fs.mkdirSync('./database/upload/' + req.body.name, function(err) {
+                if(err) { 
+                    res.send(jsonResponse(400, 'UPLOAD FAIL'));
+                    console.error(err);
+                }
+            });
         else
             console.log('exist');
 
@@ -12,10 +17,12 @@ module.exports.upload = (req, res) => {
         let fileName = Date().split(' ').join('') + file.name;
         let path = './database/upload/' + req.body.name + '/' + fileName;
         fs.copyFile(file.path, path, (err) => {
-            if (err)
+            if (err) {
                 res.send(jsonResponse(400, 'UPLOAD FAIL'));
+                console.error(err);
+            }
             else
-                res.send(jsonResponse(200, 'SUCCESSFULLY', 'http://13.251.24.65:5000/' + req.body.name + '/' + fileName));
+                res.send(jsonResponse(200, 'SUCCESSFULLY', 'http://13.251.24.65:5005/' + req.body.name + '/' + fileName));
         });
 
     })

@@ -13,7 +13,8 @@ module.exports.getConversation = (req, res) => {
 			include: {
 				model: User
 			}
-		}
+		},
+        order: [[Message, 'createdAt', 'ASC']]
 	}).then(conver => {
 		if (conver) {
 			res.send(response(200, 'SUCCESSFULLY', {user: req.decoded, conver: conver}));
@@ -41,7 +42,8 @@ module.exports.getListConversation = (req, res) => {
 			include: {
 				model: User
 			}
-		}
+		},
+        order: [[Message, 'createdAt', 'ASC']]
 	}).then(list => {
 		if (list) {
 			res.send(response(200, 'SUCCESSFULLY', list));
