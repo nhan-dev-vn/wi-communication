@@ -7,6 +7,10 @@
         <script src="vendor/js/jquery.min.js"></script>
         <script src="vendor/js/angular.min.js"></script>
         <script src="vendor/js/bootstrap.min.js"></script>
+        <script src="vendor/js/angular-sanitize.min.js"></script>
+        <script src="vendor/js/ng-file-upload.min.js"></script>
+        <script src="vendor/js/async.min.js"></script>
+
         <script src="vendor/js/socket.io.js"></script>
         
         <script src="js/app.js"></script>
@@ -31,10 +35,10 @@
         <div style="height: 100%;" 
             ng-show="isLogin" class="container">
                 <div style="height: 100%; border: 1px solid #eee; background: #f5f5f5;" class="col-sm-3">
-                    <left-side username="username" list-conver="listConver" cur-conver="curConver"></left-side>
+                    <left-side user="user" list-conver="listConver" cur-conver="curConver"></left-side>
                 </div>
-                <div style="height: 100%; border: 1px solid #eee;" class="col-sm-9">
-                    <right-side username="username" list-conver="listConver" cur-conver="curConver"></right-side>
+                <div style="height: 100%; border: 1px solid #eee;padding: 0px" class="col-sm-9">
+                    <right-side user="user" list-conver="listConver" cur-conver="curConver" token="token"></right-side>
                 </div>
         </div>
     </body>

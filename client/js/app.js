@@ -1,18 +1,20 @@
-var app = angular.module('wi-help-desk-chat', ['apiServiceModule', 'left-side', 'right-side']);
+var app = angular.module('wi-help-desk-chat', ['ngFileUpload', 'apiServiceModule', 'left-side', 'right-side', 'ngSanitize']);
 app.controller('appCtrl', function($scope, apiService, $timeout) {
+    let listMessage = $('.list-message');
     $scope.isLogin = false;
     $scope.login = function(name) {
         console.log('login', name);
         apiService.login({username: name}, function(res) {
             if(res) {
-                $scope.username = res.username;
+                $scope.user = res.user;
+                $scope.token = res.token;
                 window.localStorage.setItem('token', res.token);
                 $scope.isLogin = true;
-                apiService.getListConversation(res.token, {username: res.username}, function(res) {
+                apiService.getListConversation(res.token, {username: res.user.username}, function(res) {
                     if(res) {
                         $scope.listConver = res;
                         $scope.listConver.forEach(function(conver) {
-                            socket.emit('join-room', {username: $scope.username, idConversation: conver.id});
+                            socket.emit('join-room', {username: $scope.user.username, idConversation: conver.id});
                         });
                         $scope.curConver = $scope.listConver[0];
                     }else{
@@ -23,9 +25,5 @@ app.controller('appCtrl', function($scope, apiService, $timeout) {
             }
         });
     }
-    socket.on('sendMessage', function(data) {
-        $timeout(function() {
-            $scope.listConver.filter(function(conver) { return conver.id==data.idConversation; })[0].Messages.push(data);
-        })
-    });
+    
 });

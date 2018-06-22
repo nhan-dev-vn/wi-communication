@@ -4,17 +4,18 @@
     }
 </style>
 <div style="text-align: center; color: #419be8; font-weight: bold; font-size: 20px; border-bottom: 1px solid #eee" class="row">
-    {{leftSide.username}}
+    {{leftSide.user.username}}
 </div>
 <div style="text-align: center;" class="row">
     <input style="width: 90%; border: 1px solid #eee; border-radius: 30px; padding: 5px" 
             ng-model="filterByName" type="text" placeholder="Search conversation by name">
 </div>
 <div class="row">
-    <ul>
+    <ul style="padding: 10px">
         <li style="padding: 5px; cursor: pointer;" ng-repeat="conver in leftSide.listConver | filter: {name: filterByName} " ng-click="leftSide.curConver=conver">
-            <b>{{conver.name}}</b>
-            <p style="color: gray">{{conver.Messages[conver.Messages.length-1].content}}</p>
+            <b style="overflow: hidden; text-overflow: ellipsis; width: 80%; white-space: nowrap">{{conver.name.replace("Help_Desk-", "")}}</b>
+            <div ng-if="conver.Messages[conver.Messages.length-1].type!='text'" style="color: gray; overflow: hidden; text-overflow: ellipsis; width: 80%; white-space: nowrap">{{leftSide.fileName(conver.Messages[conver.Messages.length-1].content)}}</div>
+            <p ng-bind-html="conver.Messages[conver.Messages.length-1].content" ng-if="conver.Messages[conver.Messages.length-1].type=='text'" style="color: gray; overflow: hidden; text-overflow: ellipsis; width: 80%; white-space: nowrap"></p>
         </li>
     </ul>
 </div>

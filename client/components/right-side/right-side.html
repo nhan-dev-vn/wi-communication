@@ -2,29 +2,78 @@
     ::placeholder {
         color: #ccc;
     }
+
     textarea:focus {
         outline: none !important;
     }
+
+    .message {
+        width: 80%;
+        word-break: keep-all;
+        word-wrap: break-word;
+    }
+    .row {
+        margin: 0px;
+    }
 </style>
 <div style="border-bottom: 1.5px solid #eee; padding-left: 10px; font-size: 18px" class="row">
-    <b style="color: #ccc">To: </b><span style="color: #419be8">{{rightSide.curConver.name}}</span>
+    <b style="color: #ccc">To: </b>
+    <span style="color: #419be8">{{rightSide.curConver.name.replace("Help_Desk-", "")}}</span>
 </div>
-<div style="border-bottom: 1px solid #eee; height: 79%;" class="row">
-    <ul>
-        <li ng-repeat="message in rightSide.curConver.Messages">
-            <b>{{message.User.username}}:</b>   {{message.content}}
-        </li>
-    </ul>
-</div>
-<div class="row">
-    <textarea style="width: 100%; border:none; padding-left: 10px; padding-right: 10px" name="" id="" rows="2" placeholder="Enter your message"></textarea>
-</div>
-<div class="row">
-    <div class="col-sm-2">
-        <span class="glyphicon glyphicon-picture" style="color: #419be8; cursor: pointer;font-size: 20px"></span>
-        <span class="glyphicon glyphicon-paperclip" style="color: #419be8; cursor: pointer;font-size: 20px"></span>
+<div style=" max-height: 79%;  overflow-y: overlay" class="row list-message" 
+     ngf-drop="rightSide.upload($files)" class="drop-box" ngf-drag-over-class="'dragover'" ngf-multiple="true">
+    <div style="padding: 2px 15px;" class="row" ng-repeat="message in rightSide.curConver.Messages | orderBy : 'createdAt' track by $index">
+        <div ng-if="message.User.username!=rightSide.user.username" class="row" style="color: gray; text-align: center">---{{message.createdAt}}---</div>
+        <div ng-if="message.User.username!=rightSide.user.username" style="width: 70%; float: left;margin-bottom: 2px">
+            <p style="font-weight: bold; margin-top: 3px; margin-bottom: 3px">{{message.User.username}}</p>
+            <div ng-if="message.type!='image'" style="background: #e6e6e6; border-radius: 10px; display: inline-block; padding: 6px 8px ;max-width: 100%">
+                <p class="message" ng-bind-html="message.content" data-html="true" style=" display: inline;" ng-if="message.type=='text'">
+                </p>
+                <p class="message" style=" display: inline;" ng-if="message.type=='file'">
+                    <a href="{{rightSide.download(message.content)}}">
+                        <i class="glyphicon glyphicon-circle-arrow-down"></i>
+                        {{rightSide.fileName(message.content)}}
+                    </a>
+                </p>
+            </div>
+            <div ng-if="message.type=='image'" style=" display: inline-block;max-width: 100%">
+                <p class="message" style=" display: inline;">
+                    <a href="{{rightSide.download(message.content)}}">
+                        <img src="{{message.content}}" style="max-width: 60%; max-height: 40%;;border: 1px solid #ddd;border-radius: 4px;">
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div ng-if="message.User.username==rightSide.user.username" style="width: 70%; float: right;margin-bottom: 2px">
+            <div ng-if="message.type!='image'" style="background: #419be8; border-radius: 10px; float: right; display: inline-block;padding: 6px 8px;max-width: 100%">
+                <p class="message" ng-bind-html="message.content" data-html="true" style="color: #fff;display: inline; " ng-if="message.type=='text'">
+                </p>
+                <p class="message" style=" display: inline;" ng-if="message.type=='file'">
+                    <a href="{{rightSide.download(message.content)}}" style="color: #fff">
+                        <i class="glyphicon glyphicon-circle-arrow-down"></i>
+                        {{rightSide.fileName(message.content)}}
+                    </a>
+                </p>
+            </div>
+            <div ng-if="message.type=='image'" style=" text-align: right; float: right; display: inline-block;padding: 6px 8px;max-width: 100%">
+                <p class="message" style=" display: inline;">
+                    <a href="{{rightSide.download(message.content)}}">
+                        <img src="{{message.content}}" style="max-width: 70%; max-height: 40%;border: 1px solid #ddd;border-radius: 4px;">
+                    </a>
+                </p>
+            </div>
+        </div>
     </div>
-    <div style="float: right" class="col-sm-1">
-        <span class="glyphicon glyphicon-send" style="color: #419be8; cursor: pointer;font-size: 20px"></span>
+</div>
+<div style="border-top: 1px solid #eee;position: absolute; bottom: 0; width: 100%;" class="row">
+    <textarea style="width: 100%; border:none; padding-left: 10px; padding-right: 10px" name="" id="text-message" rows="2" placeholder="Enter your message"></textarea>
+    <div style="padding-left: 10px; padding-right: 10px">
+        <span class="glyphicon glyphicon-picture" style="color: #419be8; cursor: pointer;font-size: 20px"
+            ngf-select="rightSide.upload($files)" multiple="multiple" ngf-accept="'image/*'">
+        </span>
+        <span class="glyphicon glyphicon-paperclip" style="color: #419be8; cursor: pointer;font-size: 20px"
+            ngf-select="rightSide.upload($files)" multiple="multiple">
+        </span>
+        <span class="glyphicon glyphicon-send" style="color: #419be8; cursor: pointer;font-size: 20px; float: right;" ng-click="rightSide.sendMessage()"></span>
     </div>
 </div>

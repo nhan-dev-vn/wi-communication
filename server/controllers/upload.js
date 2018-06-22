@@ -15,7 +15,7 @@ module.exports.upload = (req, res) => {
             if (err)
                 res.send(jsonResponse(400, 'UPLOAD FAIL'));
             else
-                res.send(jsonResponse(200, 'SUCCESSFULLY', 'http://13.251.24.65:5000/' + req.body.name + '/' + fileName));
+                res.send(jsonResponse(200, 'SUCCESSFULLY', 'http://13.251.24.65:5005/' + req.body.name + '/' + fileName));
         });
 
     })

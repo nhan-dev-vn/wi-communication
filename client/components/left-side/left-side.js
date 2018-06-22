@@ -5,6 +5,9 @@ function Controller(apiService, $timeout, $element){
     let self = this;
     this.$onInit = function() {
     }
+    this.fileName = function(path) {
+        return path.substring(59+self.curConver.name.length, path.length);
+    }
 }
 
 let appLeft = angular.module(leftSideModule, []);
@@ -13,7 +16,7 @@ appLeft.component(leftSideComponent, {
     controller: Controller,
     controllerAs: leftSideComponent,
     bindings: {
-        username: '<',
+        user: '<',
         listConver: '<',
         curConver: '='
     }

@@ -13,7 +13,8 @@ module.exports.getConversation = (req, res) => {
 			include: {
 				model: User
 			}
-		}
+		},
+		order: [[Message, 'createdAt', 'ASC']]
 	}).then(conver => {
 		if (conver) {
 			res.send(response(200, 'SUCCESSFULLY', {user: req.decoded, conver: conver}));
@@ -23,11 +24,12 @@ module.exports.getConversation = (req, res) => {
 			}).then(conver => {
 				res.send(response(200, 'SUCCESSFULLY', {user: req.decoded, conver: conver}));
 			}).catch(err => {
+				console.error(err);
 				res.send(response(400, 'SOMETHING WENT WRONG 2'));
 			});
-
 		}
 	}).catch(err => {
+		console.error(err);
 		res.send(response(400, 'SOMETHING WENT WRONG 1'));
 	})
 }
@@ -41,14 +43,17 @@ module.exports.getListConversation = (req, res) => {
 			include: {
 				model: User
 			}
-		}
+		},
+		order: [[Message, 'createdAt', 'ASC']]
 	}).then(list => {
 		if (list) {
 			res.send(response(200, 'SUCCESSFULLY', list));
 		} else {
+			console.error('No conversation');
 			res.send(response(400, 'SOMETHING WENT WRONG 2'));
 		}
 	}).catch(err => {
+		console.error(err);
 		res.send(response(400, 'SOMETHING WENT WRONG 1'));
 	})
 }

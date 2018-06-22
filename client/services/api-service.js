@@ -3,8 +3,9 @@ let serviceName = 'apiService';
 const URL = 'http://13.251.24.65:5005';
 const LOGIN = URL + '/login';
 const GET_LIST_CONVERSATION = URL + '/api/list/conversation';
-angular.module(moduleName, []).service(serviceName, function ($http) {
-    
+const POST_MESSAGE = URL + '/api/message/new';
+const UPLOAD = URL + '/api/upload';
+angular.module(moduleName, []).service(serviceName, function ($http, Upload) {
     let doPost = function(URL, token, data, cb) {
         $http({
             method: 'POST',
@@ -47,6 +48,31 @@ angular.module(moduleName, []).service(serviceName, function ($http) {
     }
     this.getListConversation = function(token, data, cb) {
         doPost(GET_LIST_CONVERSATION, token, data, cb);
+    }
+    this.postMessage = (data, token, cb) => {
+        doPost(POST_MESSAGE, token, data, cb);
+    }
+    this.upload = (data, token, cb) => {
+        Upload.upload({
+            url: UPLOAD,
+            headers: {
+                'Authorization': token
+            },
+            file: data.file,
+            fields: data.fields
+        }).then(
+            (response) => {
+                if (response.data.code != 200) {
+                    console.error(response.data.reason);
+                    cb();
+                } else {
+                    cb(response.data.content);
+                }
+            },
+            (error) => {
+                console.error(error);
+                cb();
+            });
     }
     return this;
 });
