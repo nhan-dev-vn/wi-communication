@@ -33,7 +33,7 @@ router.post('/upload', multipartyMiddleware, (req, res) => {
     ctrlUpload.upload(req,res);
 })
 router.get('/download/:folder/:fileName', (req, res) => {
-	res.download('./database/upload/' + req.params.folder + '/' + req.params.fileName, req.params.fileName);
+	res.download('./database/upload/' + req.params.folder + '/' + req.params.fileName, req.params.fileName.substr(33, req.params.fileName.length));
 });
 
 module.exports = router;
