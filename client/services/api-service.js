@@ -1,8 +1,8 @@
 let moduleName = 'apiServiceModule';
 let serviceName = 'apiService';
-
-const LOGIN = '/login';
-const GET_LIST_CONVERSATION = '/api/list/conversation';
+const URL = 'http://13.251.24.65:5005';
+const LOGIN = URL + '/login';
+const GET_LIST_CONVERSATION = URL + '/api/list/conversation';
 angular.module(moduleName, []).service(serviceName, function ($http) {
     
     let doPost = function(URL, token, data, cb) {

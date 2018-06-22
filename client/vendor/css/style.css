@@ -1,0 +1,26 @@
+.row {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+input:focus { 
+    outline: none !important;
+}
+li {
+    list-style: none;
+}
+/* scroll */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 1px rgb(202, 202, 202); 
+    border-radius: 2px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(207, 207, 207); 
+    border-radius: 10px;
+}

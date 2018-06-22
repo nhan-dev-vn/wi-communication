@@ -4,7 +4,6 @@ let leftSideModule = 'left-side';
 function Controller(apiService, $timeout, $element){
     let self = this;
     this.$onInit = function() {
-        console.log();
     }
 }
 
@@ -15,6 +14,7 @@ appLeft.component(leftSideComponent, {
     controllerAs: leftSideComponent,
     bindings: {
         username: '<',
-        listConver: '<'
+        listConver: '<',
+        curConver: '='
     }
 });

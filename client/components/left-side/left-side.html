@@ -1,10 +1,20 @@
-<div class="row">
+<style>
+    ::placeholder {
+        color: #eee;
+    }
+</style>
+<div style="text-align: center; color: #419be8; font-weight: bold; font-size: 20px; border-bottom: 1px solid #eee" class="row">
     {{leftSide.username}}
+</div>
+<div style="text-align: center;" class="row">
+    <input style="width: 90%; border: 1px solid #eee; border-radius: 30px; padding: 5px" 
+            ng-model="filterByName" type="text" placeholder="Search conversation by name">
 </div>
 <div class="row">
     <ul>
-        <li ng-repeat="conver in leftSide.listConver">
-            {{conver.name}}
+        <li style="padding: 5px; cursor: pointer;" ng-repeat="conver in leftSide.listConver | filter: {name: filterByName} " ng-click="leftSide.curConver=conver">
+            <b>{{conver.name}}</b>
+            <p style="color: gray">{{conver.Messages[conver.Messages.length-1].content}}</p>
         </li>
     </ul>
 </div>
