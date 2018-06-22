@@ -1,7 +1,0 @@
-﻿thực tập 3
-khóa luận 7
-học máy 3
-các vấn đề hiện đại trong khmt 3
-xử lý ảnh (xử lý ngôn ngữ tự nhiên, thị giác máy) 3
-phân tích thiết kế hđt 3
-chuyên nghiệp trong công nghệ (pp tính, tối ưu hóa) 2
