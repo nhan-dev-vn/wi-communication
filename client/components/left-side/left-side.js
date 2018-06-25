@@ -6,8 +6,19 @@ function Controller(apiService, $timeout, $element){
     this.$onInit = function() {
     }
     this.fileName = function(path) {
+        if(path)
         return path.substring(59+self.curConver.name.length, path.length);
+        return '';
     }
+    socket.on('join-help-desk', function(data) {
+        console.log('join-help-desk', data);
+        apiService.getConversation(self.token, {name: data.name}, function(res) {
+            if(res) {
+                self.listConver.push(res.conver);
+                socket.emit('join-room', {username: self.user.username, idConversation: data.id});
+            }
+        });
+    });
 }
 
 let appLeft = angular.module(leftSideModule, []);
@@ -16,6 +27,7 @@ appLeft.component(leftSideComponent, {
     controller: Controller,
     controllerAs: leftSideComponent,
     bindings: {
+        token: '<',
         user: '<',
         listConver: '<',
         curConver: '='

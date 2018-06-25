@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const routesApi = require('./routes/index');
 const loginApi = require('./routes/login');
 const io = require('socket.io')(server);
-require('./socket.io/socket.io')(io);
+require('./socket.io/socket.io').socket_io.connect(io);
 require('./database/db-connect');
 
 app.use(cors());

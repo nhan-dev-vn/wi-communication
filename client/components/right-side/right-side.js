@@ -34,7 +34,9 @@ function Controller(apiService, $timeout, $element){
         send();
     }
     this.fileName = function(path) {
+        if(path)
         return path.substring(59+self.curConver.name.length, path.length);
+        return '';
     }
     this.upload = function (files) {
         async.forEachOfSeries(files, (file, i, _done) => {

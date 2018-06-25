@@ -17,8 +17,9 @@ module.exports.postMessage = (req, res) => {
 			appProfile.io.in(req.body.idConversation).emit('sendMessage', req.body);
 		}
 		else
-			res.send(response(404, 'SOMETHING WENT WRONG'));
+			res.send(response(400, 'CREATE FAIL'));
 	}).catch(err => {
-		res.send(response(404, 'CREATE MESSAGE FAIL', err));
+		console.error(err);
+		res.send(response(404, 'SOMETHING WENT WRONG: ' + err));
 	});
 }

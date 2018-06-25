@@ -9,7 +9,8 @@ module.exports = function authenticate() {
         if (token) {
             jwt.verify(token, 'secretKey', function (err, decoded) {
                 if (err) {
-                    return res.status(401).send(responseJSON(401, 'Failed to authenticate'));
+                    console.error(err);
+                    return res.status(401).send(responseJSON(401, 'Failed to authenticate' + err));
                 } else {
                     User.findOne({
                         where: {
@@ -21,12 +22,14 @@ module.exports = function authenticate() {
                             next();
                         } else {
                             User.create({
-                                username: decoded.username
+                                username: decoded.username,
+                                password: '=========================',
+                                role: 2
                             }).then(user => {
                                 req.decoded = user.toJSON();
                                 next();
                             }).catch(err => {
-                                return res.status(401).send(responseJSON(401, 'Failed to authenticate'));
+                                return res.status(401).send(responseJSON(401, 'Failed to authenticate' + err));
                             });
                         }
                     });

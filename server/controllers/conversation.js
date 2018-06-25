@@ -4,6 +4,7 @@ var User = models.User;
 var Conversation = models.Conversation;
 var Message = models.Message;
 var Op = models.Op;
+var socket_io = require('../socket.io/socket.io').socket_io;
 
 module.exports.getConversation = (req, res) => {
 	Conversation.findOne({
@@ -22,15 +23,20 @@ module.exports.getConversation = (req, res) => {
 			Conversation.create({
 				name: req.body.name
 			}).then(conver => {
-				res.send(response(200, 'SUCCESSFULLY', {user: req.decoded, conver: conver}));
+				if(conver) {
+					if(req.body.users) conver.addUsers(req.body.users);
+					if(conver.name.indexOf('Help_Desk')!=-1) (socket_io.socket).broadcast.emit('join-help-desk', conver);
+					res.send(response(200, 'SUCCESSFULLY', {user: req.decoded, conver: conver}));
+				}
+				else res.send(response(404, 'NOT FOUND & CREATE FAIL'));
 			}).catch(err => {
 				console.error(err);
-				res.send(response(400, 'SOMETHING WENT WRONG 2'));
+				res.send(response(400, 'SOMETHING WENT WRONG: ' + err));
 			});
 		}
 	}).catch(err => {
 		console.error(err);
-		res.send(response(400, 'SOMETHING WENT WRONG 1'));
+		res.send(response(400, 'SOMETHING WENT WRONG: ' + err));
 	})
 }
 module.exports.getListConversation = (req, res) => {
@@ -50,10 +56,10 @@ module.exports.getListConversation = (req, res) => {
 			res.send(response(200, 'SUCCESSFULLY', list));
 		} else {
 			console.error('No conversation');
-			res.send(response(400, 'SOMETHING WENT WRONG 2'));
+			res.send(response(400, 'SOMETHING WENT WRONG: ' + err));
 		}
 	}).catch(err => {
 		console.error(err);
-		res.send(response(400, 'SOMETHING WENT WRONG 1'));
+		res.send(response(400, 'SOMETHING WENT WRONG: ' + err));
 	})
 }

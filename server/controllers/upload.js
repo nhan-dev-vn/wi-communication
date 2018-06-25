@@ -6,8 +6,8 @@ module.exports.upload = (req, res) => {
         if (err)
             fs.mkdirSync('./database/upload/' + req.body.name, function(err) {
                 if(err) { 
-                    res.send(jsonResponse(400, 'UPLOAD FAIL'));
                     console.error(err);
+                    res.send(jsonResponse(400, 'CREATE FOLDER FAIL: ' + err));
                 }
             });
         else
@@ -18,11 +18,11 @@ module.exports.upload = (req, res) => {
         let path = './database/upload/' + req.body.name + '/' + fileName;
         fs.copyFile(file.path, path, (err) => {
             if (err) {
-                res.send(jsonResponse(400, 'UPLOAD FAIL'));
                 console.error(err);
+                res.send(jsonResponse(400, 'UPLOAD FAIL: ' + err));
             }
             else
-                res.send(jsonResponse(200, 'SUCCESSFULLY', 'http://13.251.24.65:5005/' + req.body.name + '/' + fileName));
+                res.send(jsonResponse(200, 'SUCCESSFULLY', 'http://localhost:5005/' + req.body.name + '/' + fileName));
         });
 
     })

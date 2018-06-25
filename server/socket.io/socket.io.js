@@ -1,7 +1,8 @@
-
-module.exports = function (io) {
+let SOCKET_IO = {};
+SOCKET_IO.connect = function (io) {
     let listRoom = {};
     io.on('connection', function (socket) {
+        SOCKET_IO.socket = socket;
         socket.on('join-room', function (data) {
             socket.idRoom = data.idConversation;
             socket.username = data.username;
@@ -42,3 +43,4 @@ module.exports = function (io) {
         });
     });
 };
+module.exports.socket_io = SOCKET_IO;

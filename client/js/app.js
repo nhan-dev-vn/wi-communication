@@ -2,9 +2,22 @@ var app = angular.module('wi-help-desk-chat', ['ngFileUpload', 'apiServiceModule
 app.controller('appCtrl', function($scope, apiService, $timeout) {
     let listMessage = $('.list-message');
     $scope.isLogin = false;
-    $scope.login = function(name) {
+    $scope.register = function(name, password) {
+        console.log('register', name);
+        apiService.register({
+            username: name,
+            password: password,
+            role: 1
+        }, function(res) {
+            if(res) alert('register success');
+        });
+    }
+    $scope.login = function(name, password) {
         console.log('login', name);
-        apiService.login({username: name}, function(res) {
+        apiService.login({
+            username: name,
+            password: password
+        }, function(res) {
             if(res) {
                 $scope.user = res.user;
                 $scope.token = res.token;

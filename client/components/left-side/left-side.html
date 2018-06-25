@@ -12,7 +12,8 @@
 </div>
 <div class="row">
     <ul style="padding: 10px">
-        <li style="padding: 5px; cursor: pointer;" ng-repeat="conver in leftSide.listConver | filter: {name: filterByName} " ng-click="leftSide.curConver=conver">
+        <li style="padding: 5px; cursor: pointer;" ng-show="conver.Messages.length>=1"
+            ng-repeat="conver in leftSide.listConver | filter: {name: filterByName} " ng-click="leftSide.curConver=conver">
             <b style="overflow: hidden; text-overflow: ellipsis; width: 80%; white-space: nowrap">{{conver.name.replace("Help_Desk-", "")}}</b>
             <div ng-if="conver.Messages[conver.Messages.length-1].type!='text'" style="color: gray; overflow: hidden; text-overflow: ellipsis; width: 80%; white-space: nowrap">{{leftSide.fileName(conver.Messages[conver.Messages.length-1].content)}}</div>
             <p ng-bind-html="conver.Messages[conver.Messages.length-1].content" ng-if="conver.Messages[conver.Messages.length-1].type=='text'" style="color: gray; overflow: hidden; text-overflow: ellipsis; width: 80%; white-space: nowrap"></p>
