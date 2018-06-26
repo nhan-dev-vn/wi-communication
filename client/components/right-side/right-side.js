@@ -69,6 +69,7 @@ function Controller(apiService, $timeout, $element){
     }
     this.thumb = function(path) {
         let p = path.slice(25);
+        console.log(p);
         return 'http://13.251.24.65:5001/api/thumb/'+p+'?token='+self.token;
     }
     this.download = function(path) {
