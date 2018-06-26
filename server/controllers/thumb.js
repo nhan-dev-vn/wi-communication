@@ -19,12 +19,14 @@ module.exports.thumb = function(req, res) {
                 }
             });
         }else{
+            console.log(original_dir, thumb_dir);
             thumb(req, res, original_dir, thumb_dir);
         }
     });
     
 }
 function thumb(req, res, original_dir, thumb_dir){
+    console.log(original_dir, thumb_dir);
     thumb({
         source: original_dir,
         destination: thumb_dir,
