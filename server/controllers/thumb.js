@@ -34,7 +34,6 @@ function thumb(req, res, original_dir, thumb_dir){
         overwrite: false
     }, function(files, err){
         if(err) {
-            console.log(err);
             res.send(response(400, 'THUMB FAIL', err));
         }
         else {
