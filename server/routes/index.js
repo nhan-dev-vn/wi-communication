@@ -38,7 +38,7 @@ router.get('/download/:folder/:fileName', (req, res) => {
 	res.download(PATH.join(__dirname, '../database/upload/' + req.params.folder + '/' + req.params.fileName), req.params.fileName.substr(33, req.params.fileName.length));
 });
 //thumb image
-router.post('/thumb/:folder/:fileName', (req, res) => {
+router.get('/thumb/:folder/:fileName', (req, res) => {
     ctrlThumb.thumb(req, res);
 });
 
