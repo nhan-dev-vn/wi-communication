@@ -12,7 +12,7 @@ function upload(req, res) {
             res.send(jsonResponse(400, 'UPLOAD FAIL: ' + err));
         }
         else {
-            console.log('****UPLOAD SUCCESS****');
+        //    console.log('****UPLOAD SUCCESS****');
             res.send(jsonResponse(200, 'SUCCESSFULLY', 'http://13.251.24.65:5001/' + req.body.name + '/' + fileName));
         }
     });
