@@ -9,6 +9,13 @@ module.exports.upload = (req, res) => {
                 if(err) { 
                     console.log(err);
                     res.send(jsonResponse(400, 'CREATE FOLDER FAIL: ' + err));
+                }else {
+                    fs.mkdirSync(PATH.join(__dirname, '../database/upload/' + req.body.name + '/thumb'), function(err) {
+                        if(err) { 
+                            console.log(err);
+                            res.send(jsonResponse(400, 'CREATE FOLDER THUMB FAIL: ' + err));
+                        }
+                    });
                 }
             });
         }
