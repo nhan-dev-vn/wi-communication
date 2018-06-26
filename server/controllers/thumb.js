@@ -15,6 +15,7 @@ module.exports.thumb = function(req, res) {
                 if(err) {
                     res.sendFile(original_dir);
                 }else{
+
                     thumb(req, res, original_dir, thumb_dir);
                 }
             });
@@ -28,8 +29,8 @@ module.exports.thumb = function(req, res) {
 function thumb(req, res, original_dir, thumb_dir){
     console.log(original_dir, thumb_dir);
     thumb({
-        source: original_dir,
-        destination: thumb_dir,
+        source: path.join(__dirname, '../database/upload/'+ req.params.folder+'/'+req.params.fileName),
+        destination: path.join(__dirname, '../databse/upload/'+req.params.folder+'/thumb'),
         basename: md5(req.params.fileName),
         suffix: '',
         width: WIDTH_IMAGE_THUMB,
