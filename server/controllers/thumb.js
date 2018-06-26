@@ -4,8 +4,8 @@ var path = require('path');
 var md5 = require('md5');
 const WIDTH_IMAGE_THUMB = 150;
 module.exports.thumb = function(req, res) {
-    var original_dir = path.join(__dirname, '../database/upload', req.params.folder, req.params.fileName);
-    var thumb_dir = path.join(__dirname, '../database/upload', req.params.folder, 'thumb');
+    var original_dir = path.join(__dirname, '../database/upload/'+req.params.folder+req.params.fileName);
+    var thumb_dir = path.join(__dirname, '../database/upload/'+ req.params.folder+ '/thumb');
     thumb({
         source: original_dir,
         path: thumb_dir,
