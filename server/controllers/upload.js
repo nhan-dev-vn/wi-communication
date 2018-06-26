@@ -19,7 +19,7 @@ function upload(req, res){
 module.exports.upload = (req, res) => {
     fs.access(PATH.join(__dirname, '../database/upload/'+req.body.name), (err) => {
         if (err) {
-            console.log(err);
+            console.log('*******ACCESS UPLOAD FAIL*****',err);
             fs.mkdirSync(PATH.join(__dirname, '../database/upload/' + req.body.name), function(err) {
                 if(err) { 
                     console.log('*******MKDIR UPLOAD FAIL******',err);
