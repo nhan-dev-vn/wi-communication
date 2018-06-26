@@ -21,6 +21,7 @@ module.exports.upload = (req, res) => {
         if (err) {
             console.log('*******ACCESS UPLOAD FAIL*****',err);
             fs.mkdirSync(PATH.join(__dirname, '../database/upload/' + req.body.name), function(err) {
+                console.log('*****RESULT MKDIR UPLOAD*******', err);
                 if(err) { 
                     console.log('*******MKDIR UPLOAD FAIL******',err);
                     res.send(jsonResponse(400, 'CREATE FOLDER FAIL: ' + err));
