@@ -1,11 +1,29 @@
 var response = require('./response');
 var thumb = require('node-thumbnail').thumb;
+var directoryExists = require('directory-exists');
 var path = require('path');
+var fs = require('fs');
 var md5 = require('md5');
 const WIDTH_IMAGE_THUMB = 150;
 module.exports.thumb = function(req, res) {
     var original_dir = path.join(__dirname, '../database/upload/'+req.params.folder+'/'+req.params.fileName);
     var thumb_dir = path.join(__dirname, '../database/upload/'+ req.params.folder+ '/thumb');
+    directoryExists(thumb_dir, function(result) {
+        if(!result) {
+            fs.mkdirSync(thumb_dir, function(err) {
+                if(err) {
+                    res.sendFile(original_dir);
+                }else{
+                    thumb(req, res, original_dir, thumb_dir);
+                }
+            });
+        }else{
+            thumb(req, res, original_dir, thumb_dir);
+        }
+    });
+    
+}
+function thumb(req, res, original_dir, thumb_dir){
     thumb({
         source: original_dir,
         destination: thumb_dir,
@@ -28,4 +46,3 @@ module.exports.thumb = function(req, res) {
         }
     });
 }
-
