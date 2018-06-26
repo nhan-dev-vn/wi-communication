@@ -2,6 +2,7 @@ let rightSideComponent = 'rightSide';
 let rightSideModule = 'right-side';
 
 function Controller(apiService, $timeout, $element){
+    const WIDTH_IMAGE_THUMB = 130;
     let self = this;
     let textMessage = $('#text-message');
     let listMessage = $('.list-message');
@@ -43,9 +44,10 @@ function Controller(apiService, $timeout, $element){
             let type = file.type.substring(0, 5);
             apiService.upload({
                 file: file,
-                fields: {'name': self.curConver.name}
+                fields: {'name': self.curConver.name, 'width': WIDTH_IMAGE_THUMB}
             }, self.token, (res) => {
                 if(res) {
+                    console.log(res);
                     let message = {
                         content: res,
                         type: type=='image'?'image':'file',
@@ -57,15 +59,21 @@ function Controller(apiService, $timeout, $element){
                     apiService.postMessage(message, self.token, (res) => {
                             _done();
                     });
+                } else {
+                    console.log('UPLOAD FAIL');
                 }
             })
         }, (err) => {
-
+           
         });
+    }
+    this.thumb = function(path) {
+        var lastDots = path.lastIndexOf('.');
+        return path.substring(0, lastDots) +'_thumb'+path.substring(lastDots, path.length);
     }
     this.download = function(path) {
         let p = path.slice(25);
-        return 'http://13.251.24.65:5005/api/download/'+p+'?token='+self.token;
+        return 'http://13.251.24.65:5001/api/download/'+p+'?token='+self.token;
     }
     socket.on('sendMessage', function(data) {
         $timeout(function() {
