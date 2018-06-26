@@ -27,13 +27,13 @@ module.exports.upload = (req, res) => {
                     res.send(jsonResponse(400, 'CREATE FOLDER FAIL: ' + err));
                 }else {
                     console.log('******MKDIR UPLOAD SUCCESS********');
-                    upload(req, res);
+                    // upload(req, res);
                 }
             });
         }
         else {
             upload(req, res);
-            console.log('exist');
         }
+        console.log('exist');
     })
 };
