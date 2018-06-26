@@ -2,34 +2,43 @@ var fs = require('fs');
 var jsonResponse = require('./response');
 var PATH = require('path');
 var directoryExists = require('directory-exists');
-function upload(req, res) {
-    let file = req.files.file;
-    let fileName = Date().split(' ').join('') + file.name;
-    let path = PATH.join(__dirname, '../database/upload/' + req.body.name + '/' + fileName);
-    fs.copyFile(file.path, path, (err) => {
-        if (err) {
-            res.send(jsonResponse(400, 'UPLOAD FAIL: ' + err));
-        }
-        else {
-            console.log('****UPLOAD SUCCESS****');
-            res.send(jsonResponse(200, 'SUCCESSFULLY', 'http://13.251.24.65:5001/' + req.body.name + '/' + fileName));
-        }
-    });
-}
+
 module.exports.upload = (req, res) => {
     let folderUpload = PATH.join(__dirname, '../database/upload/' + req.body.name);
     directoryExists(folderUpload, (error, result) => {
-        if(!result) {
-            fs.mkdirSync(folderUpload, function(err) {
+        if (!result) {
+            fs.mkdirSync(folderUpload, function (err) {
                 if (err) {
                     res.send(jsonResponse(400, 'CREATE FOLDER FAIL: ' + err));
                 } else {
                     console.log('******MKDIR UPLOAD SUCCESS********');
-                    upload(req, res);
+                    let file = req.files.file;
+                    let fileName = Date().split(' ').join('') + file.name;
+                    let path = PATH.join(__dirname, '../database/upload/' + req.body.name + '/' + fileName);
+                    fs.copyFile(file.path, path, (err) => {
+                        if (err) {
+                            res.send(jsonResponse(400, 'UPLOAD FAIL: ' + err));
+                        }
+                        else {
+                            console.log('****UPLOAD SUCCESS****');
+                            res.send(jsonResponse(200, 'SUCCESSFULLY', 'http://13.251.24.65:5001/' + req.body.name + '/' + fileName));
+                        }
+                    });
                 }
             });
-        }else{
-            upload(req, res);
+        } else {
+            let file = req.files.file;
+            let fileName = Date().split(' ').join('') + file.name;
+            let path = PATH.join(__dirname, '../database/upload/' + req.body.name + '/' + fileName);
+            fs.copyFile(file.path, path, (err) => {
+                if (err) {
+                    res.send(jsonResponse(400, 'UPLOAD FAIL: ' + err));
+                }
+                else {
+                    console.log('****UPLOAD SUCCESS****');
+                    res.send(jsonResponse(200, 'SUCCESSFULLY', 'http://13.251.24.65:5001/' + req.body.name + '/' + fileName));
+                }
+            });
         }
     });
 };
