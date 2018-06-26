@@ -39,7 +39,7 @@
             <div ng-if="message.type=='image'" style=" display: inline-block;max-width: 100%">
                 <p class="message" style=" display: inline;">
                     <a href="{{rightSide.download(message.content)}}">
-                        <img src="{{message.content}}" style="max-width: 60%; max-height: 40%;;border: 1px solid #ddd;border-radius: 4px;">
+                        <img src="{{rightSide.thumb(message.content)}}" style="max-width: 70%; max-height: 40%;;border: 1px solid #ddd;border-radius: 4px;">
                     </a>
                 </p>
             </div>
@@ -58,7 +58,7 @@
             <div ng-if="message.type=='image'" style=" text-align: right; float: right; display: inline-block;padding: 6px 8px;max-width: 100%">
                 <p class="message" style=" display: inline;">
                     <a href="{{rightSide.download(message.content)}}">
-                        <img src="{{message.content}}" style="max-width: 70%; max-height: 40%;border: 1px solid #ddd;border-radius: 4px;">
+                        <img src="{{rightSide.thumb(message.content)}}" style="max-width: 70%; max-height: 40%;border: 1px solid #ddd;border-radius: 4px;">
                     </a>
                 </p>
             </div>

@@ -14,7 +14,7 @@ function Controller(apiService, $timeout, $element){
         console.log('join-help-desk', data);
         apiService.getConversation(self.token, {name: data.name}, function(res) {
             if(res) {
-                self.listConver.push(res.conver);
+                self.listConver.unshift(res.conver);
                 socket.emit('join-room', {username: self.user.username, idConversation: data.id});
             }
         });

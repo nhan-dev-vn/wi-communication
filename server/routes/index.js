@@ -3,12 +3,13 @@ const multiparty = require('connect-multiparty');
 const multipartyMiddleware = multiparty();
 var express = require('express');
 var router = express.Router();
-
+var PATH = require('path');
 var ctrlMessage = require('../controllers/message');
 var ctrlConversation = require('../controllers/conversation');
 var ctrlUser = require('../controllers/user');
 
 var ctrlUpload = require('../controllers/upload.js');
+var ctrlThumb = require('../controllers/thumb.js');
 const auth = require('../controllers/authenticate');
 
 router.use(auth());
@@ -32,8 +33,13 @@ router.post('/list/conversation', (req, res) => {
 router.post('/upload', multipartyMiddleware, (req, res) => {
     ctrlUpload.upload(req,res);
 })
+//download
 router.get('/download/:folder/:fileName', (req, res) => {
-	res.download('./database/upload/' + req.params.folder + '/' + req.params.fileName, req.params.fileName.substr(33, req.params.fileName.length));
+	res.download(PATH.join(__dirname, '../database/upload/' + req.params.folder + '/' + req.params.fileName), req.params.fileName.substr(33, req.params.fileName.length));
+});
+//thumb image
+router.post('/thumb/:folder/:fileName', (req, res) => {
+    ctrlThumb.thumb(req, res);
 });
 
 module.exports = router;
