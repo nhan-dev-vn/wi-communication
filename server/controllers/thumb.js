@@ -8,7 +8,7 @@ const WIDTH_IMAGE_THUMB = 150;
 module.exports.thumb = function(req, res) {
     var original_dir = path.join(__dirname, '../database/upload/'+req.params.folder+'/'+req.params.fileName);
     var thumb_dir = path.join(__dirname, '../database/upload/'+ req.params.folder+ '/thumb');
-    directoryExists(thumb_dir, function(result) {
+    directoryExists(thumb_dir, function(err, result) {
         console.log(result);
         if(!result) {
             fs.mkdirSync(thumb_dir, function(err) {
