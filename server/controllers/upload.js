@@ -18,24 +18,16 @@ function upload(req, res){
 }
 module.exports.upload = (req, res) => {
     fs.access(PATH.join(__dirname, '../database/upload/'+req.body.name), (err) => {
+        console.log('*******ACCESS UPLOAD FAIL*****',err);
         if (err) {
-            console.log('*******ACCESS UPLOAD FAIL*****',err);
             fs.mkdirSync(PATH.join(__dirname, '../database/upload/' + req.body.name), function(err) {
                 console.log('*****RESULT MKDIR UPLOAD*******', err);
                 if(err) { 
                     console.log('*******MKDIR UPLOAD FAIL******',err);
                     res.send(jsonResponse(400, 'CREATE FOLDER FAIL: ' + err));
                 }else {
-                    console.log('--------MKDIR UPLOAD OK--------');
-                    fs.mkdirSync(PATH.join(__dirname, '../database/upload/' + req.body.name + '/thumb'), function(err) {
-                        if(err) { 
-                            console.log('****MKDIR THUMB FAIL*******',err);
-                            res.send(jsonResponse(400, 'CREATE FOLDER FAIL: ' + err));
-                        }else {
-                            console.log('-------------MKDIR THUMB OK--------');
-                            upload(req, res);
-                        }
-                    });
+                    console.log('******MKDIR UPLOAD SUCCESS********');
+                    upload(req, res);
                 }
             });
         }
