@@ -4,13 +4,13 @@ var directoryExists = require('directory-exists');
 var path = require('path');
 var fs = require('fs');
 var md5 = require('md5');
-const WIDTH_IMAGE_THUMB = 150;
+const WIDTH_IMAGE_THUMB = 200;
 module.exports.thumb = function(req, res) {
     var original_dir = path.join(__dirname, '../database/upload/'+req.params.folder+'/'+req.params.fileName);
     var thumb_dir = path.join(__dirname, '../database/upload/'+ req.params.folder+ '/thumb');
     directoryExists(thumb_dir, function(err, result) {
         if(!result) {
-            fs.mkdirSync(thumb_dir, function(err) {
+            fs.mkdir(thumb_dir, function(err) {
                 if(err) {
                     res.sendFile(original_dir);
                 }else{
