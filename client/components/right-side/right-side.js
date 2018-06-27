@@ -19,7 +19,7 @@ function Controller(apiService, $timeout, $element){
             idSender: self.user.id,
             idConversation: self.curConver.id,
             User: self.user,
-            createdAt: new Date()
+            createdAt: new Date((new Date()).getTime())
         };
         apiService.postMessage(message, self.token, function (res) {
         });
@@ -54,7 +54,7 @@ function Controller(apiService, $timeout, $element){
                         idSender: self.user.id,
                         idConversation: self.curConver.id,
                         User: self.user,
-                        createdAt: new Date()
+                        createdAt: new Date((new Date()).getTime())
                     }
                     apiService.postMessage(message, self.token, (res) => {
                             _done();
