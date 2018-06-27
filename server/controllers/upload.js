@@ -7,7 +7,7 @@ module.exports.upload = (req, res) => {
     let folderUpload = PATH.join(__dirname, '../database/upload/' + req.body.name);
     directoryExists(folderUpload, (error, result) => {
         if (!result) {
-            fs.mkdirSync(folderUpload, function (err) {
+            fs.mkdir(folderUpload, function (err) {
                 if (err) {
                     res.send(jsonResponse(400, 'CREATE FOLDER FAIL: ' + err));
                 } else {
