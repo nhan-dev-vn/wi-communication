@@ -36,8 +36,8 @@ SOCKET_IO.connect = function (io) {
             listRoom.forEach(function(room, index){
                 room.forEach(function(username, i) {
                     if(username == socket.username) room.splice(i, 1);
-                    if(!room.length) listRoom.splice(index, 1);
                 })
+                if(!room.length) listRoom.splice(index, 1);
             });
             socket.to(socket.idRoom).emit('disconnected', socket.username);
             console.log('a user disconnect', listRoom);
