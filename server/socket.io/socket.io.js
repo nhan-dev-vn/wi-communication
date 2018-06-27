@@ -1,6 +1,6 @@
 let SOCKET_IO = {};
 SOCKET_IO.connect = function (io) {
-    let listRoom = {};
+    let listRoom = [];
     io.on('connection', function (socket) {
         SOCKET_IO.socket = socket;
         socket.on('join-room', function (data) {
@@ -24,20 +24,21 @@ SOCKET_IO.connect = function (io) {
         });
         socket.on('off-project', function(data) {
             if(listRoom[data.idConversation]) {
-                var index = listRoom[data.idConversation].indexOf(data.username);
-                listRoom[data.idConversation].splice(index,1);
-                if(!listRoom[data.idConversation].length) delete listRoom[data.idConversation];
+                listRoom[data.idConversation].forEach(function(username, i) {
+                    if(username == data.username) listRoom[data.idConversation].splice(i,1);
+                    if(!listRoom[data.idConversation].length) delete listRoom[data.idConversation];
+                })
             }
             io.in(data.idConversation).emit('off-project', data);
             console.log('a user disconnect', listRoom);
         });
         socket.on('disconnect', function() {
-            var index;
-            if(listRoom[socket.idRoom]) {
-                index = listRoom[socket.idRoom].indexOf(socket.username);
-                listRoom[socket.idRoom].splice(index,1);
-                if(!listRoom[socket.idRoom].length) delete listRoom[socket.idRoom];
-            }
+            listRoom.forEach(function(room, index){
+                room.forEach(function(username, i) {
+                    if(username == socket.username) room.splice(i, 1);
+                    if(!room.length) listRoom.splice(index, 1);
+                })
+            });
             socket.to(socket.idRoom).emit('disconnected', socket.username);
             console.log('a user disconnect', listRoom);
         });
