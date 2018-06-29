@@ -1,6 +1,5 @@
 let moduleName = 'apiServiceModule';
 let serviceName = 'apiService';
-//const URL = 'http://localhost:5005';
 const URL = 'http://13.251.24.65:5001';
 const LOGIN = URL + '/login';
 const REGISTER = URL + '/register';
@@ -31,6 +30,7 @@ angular.module(moduleName, []).service(serviceName, function ($http, Upload) {
             cb();
         });
     }
+    this.URL = URL;
     this.register = function(data, cb) {
         $http({
             method: 'POST',
