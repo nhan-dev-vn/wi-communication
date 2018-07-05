@@ -3,7 +3,7 @@ var jsonResponse = require('./response');
 var PATH = require('path');
 var directoryExists = require('directory-exists');
 
-const URL = 'http://13.251.24.65:5001';
+const URL = 'http://54.169.149.206:5001';
 
 module.exports.upload = (req, res) => {
     let folderUpload = PATH.join(__dirname, '../database/upload/' + req.body.name);
