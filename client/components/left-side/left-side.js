@@ -7,7 +7,7 @@ function Controller(apiService, $timeout, $element){
     }
     this.fileName = function(path) {
         if(path)
-        return path.substring(59+self.curConver.name.length, path.length);
+        return path.substring(61+self.curConver.name.length, path.length);
         return '';
     }
     socket.on('join-help-desk', function(data) {

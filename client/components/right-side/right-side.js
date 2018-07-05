@@ -19,7 +19,7 @@ function Controller(apiService, $timeout, $element){
             idSender: self.user.id,
             idConversation: self.curConver.id,
             User: self.user,
-            createdAt: new Date((new Date()).getTime())
+            sendAt: new Date((new Date()).getTime())
         };
         apiService.postMessage(message, self.token, function (res) {
         });
@@ -36,7 +36,7 @@ function Controller(apiService, $timeout, $element){
     }
     this.fileName = function(path) {
         if(path)
-        return path.substring(59+self.curConver.name.length, path.length);
+        return path.substring(61+self.curConver.name.length, path.length);
         return '';
     }
     this.upload = function (files) {
@@ -54,7 +54,7 @@ function Controller(apiService, $timeout, $element){
                         idSender: self.user.id,
                         idConversation: self.curConver.id,
                         User: self.user,
-                        createdAt: new Date((new Date()).getTime())
+                        sendAt: new Date((new Date()).getTime())
                     }
                     apiService.postMessage(message, self.token, (res) => {
                             _done();
@@ -68,15 +68,16 @@ function Controller(apiService, $timeout, $element){
         });
     }
     this.thumb = function(path) {
-        let p = path.slice(25);
+        let p = path.slice(27);
         return apiService.URL + '/api/thumb/'+p+'?token='+self.token;
     }
     this.download = function(path) {
-        let p = path.slice(25);
+        let p = path.slice(27);
         return apiService.URL +'/api/download/'+p+'?token='+self.token;
     }
     socket.on('sendMessage', function(data) {
         $timeout(function() {
+            console.log(data);
             self.listConver.filter(function(conver) { return conver.id==data.idConversation; })[0].Messages.push(data);
             $timeout(function(){
                 listMessage.scrollTop(listMessage[0].scrollHeight);

@@ -22,8 +22,8 @@
 </div>
 <div style="height: 79%;  overflow-y: overlay" class="row list-message" 
      ngf-drop="rightSide.upload($files)" class="drop-box" ngf-drag-over-class="'dragover'" ngf-multiple="true">
-    <div style="padding: 2px 15px;" class="row" ng-repeat="message in rightSide.curConver.Messages | orderBy : 'createdAt' track by $index">
-        <div ng-if="message.User.username!=rightSide.user.username" class="row" style="color: gray; text-align: center">---{{message.createdAt}}---</div>
+    <div style="padding: 2px 15px;" class="row" ng-repeat="message in rightSide.curConver.Messages track by $index">
+        <div ng-if="message.User.username!=rightSide.user.username" class="row" style="color: gray; text-align: center">---{{message.sendAt}}---</div>
         <div ng-if="message.User.username!=rightSide.user.username" style="width: 70%; float: left;margin-bottom: 2px">
             <p style="font-weight: bold; margin-top: 3px; margin-bottom: 3px">{{message.User.username}}</p>
             <div ng-if="message.type!='image'" style="background: #e6e6e6; border-radius: 10px; display: inline-block; padding: 6px 8px ;max-width: 100%">

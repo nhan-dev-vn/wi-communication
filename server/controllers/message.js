@@ -10,7 +10,8 @@ module.exports.postMessage = (req, res) => {
 		content: req.body.content,
 		type: req.body.type,
 		idConversation: req.body.idConversation,
-		idSender: req.body.idSender
+		idSender: req.body.idSender,
+        sendAt: req.body.sendAt
 	}).then(message => {
 		if (message) {
 			res.send(response(200, 'SUCCESSFULLY', message));

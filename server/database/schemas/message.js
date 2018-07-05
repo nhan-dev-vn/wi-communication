@@ -21,6 +21,9 @@ module.exports = (sequelize, DataTypes) => {
         type:{
             type: DataTypes.STRING(50),
             allowNull: false
+        },
+        sendAt: {
+            type: DataTypes.NOW
         }
     });
 
