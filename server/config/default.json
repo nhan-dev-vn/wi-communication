@@ -1,0 +1,16 @@
+{
+    "db": {
+        "options": {
+            "dialect": "sqlite",
+            "storage": "database/chat_angular.sqlite"
+        },
+        "db_name": "chat_module",
+        "user": "root",
+        "password": ""
+    },
+    "app": {
+        "port" : 5001,
+        "URL": "http://54.169.149.206:5001",
+        "upload_dir": "database/upload"
+    }
+}
