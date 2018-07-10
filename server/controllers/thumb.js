@@ -5,9 +5,12 @@ var path = require('path');
 var fs = require('fs');
 var md5 = require('md5');
 const WIDTH_IMAGE_THUMB = 200;
+
+var configPath = require('config').get('app');
+
 module.exports.thumb = function(req, res) {
-    var original_dir = path.join(__dirname, '../database/upload/'+req.params.folder+'/'+req.params.fileName);
-    var thumb_dir = path.join(__dirname, '../database/upload/'+ req.params.folder+ '/thumb');
+    var original_dir = path.join(__dirname, '../' + configPath.upload_dir + '/'+req.params.folder+'/'+req.params.fileName);
+    var thumb_dir = path.join(__dirname, '../' + configPath.upload_dir + '/'+ req.params.folder+ '/thumb');
     directoryExists(thumb_dir, function(err, result) {
         if(!result) {
             fs.mkdir(thumb_dir, function(err) {

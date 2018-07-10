@@ -3,10 +3,10 @@ var fs = require('fs');
 var path = require('path');
 var Sequelize = require('sequelize');
 var basename = path.basename(module.filename);
-var sequelize = new Sequelize("chat_module", "root", "", {
-    dialect: 'sqlite',
-    storage: path.join(__dirname, 'chat_angular.sqlite')
-});
+
+var configDb = require('config').get('db');
+
+var sequelize = new Sequelize(configDb.db_name, configDb.user, configDb.password, configDb.options);
 var Op = Sequelize.Op;
 var db = {};
 fs

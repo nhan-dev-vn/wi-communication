@@ -1,4 +1,5 @@
-const PORT = 5001;
+let configApp = require('config').get('app');
+const PORT = configApp.port;
 const path = require('path');
 
 let appProfile = require('./app-init');
