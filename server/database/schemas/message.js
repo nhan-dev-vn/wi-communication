@@ -1,10 +1,10 @@
-module.exports = (sequelize, DataTypes) => {
+module.exports.define = function(sequelize, DataTypes) {
     return sequelize.define('Message', {
         id: {
             type: DataTypes.INTEGER,
-            autoIncrement: true,
+            primaryKey: true,
             allowNull: false,
-            primaryKey: true
+            autoIncrement: true
         },
         idConversation: {
             type: DataTypes.INTEGER,
@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         sendAt: {
-            type: DataTypes.NOW
+            type: DataTypes.DATE
         }
     });
 

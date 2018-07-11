@@ -1,16 +1,19 @@
 {
     "db": {
         "options": {
-            "dialect": "sqlite",
-            "storage": "database/chat_angular.sqlite"
-        },
+            "host": "localhost",
+	        "dialect": "mysql",
+            "define": {
+                "timestamps": false
+            }  
+	    },
         "db_name": "chat_module",
         "user": "root",
-        "password": ""
+        "password": "123456"
     },
     "app": {
-        "port" : 5002,
-        "URL": "http://54.169.149.206:5001",
+        "port" : 5001,
+        "URL": "http://chat.i2g.cloud",
         "upload_dir": "database/upload"
     }
 }
