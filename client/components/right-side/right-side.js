@@ -37,7 +37,7 @@ function Controller(apiService, $timeout, $element){
     }
     this.fileName = function(path) {
         if(path)
-        return path.substring(lengthUrl+34+self.curConver.name.length, path.length);
+        return path.substring(lengthUrl+35+self.curConver.name.length, path.length);
         return '';
     }
     this.upload = function (files) {
