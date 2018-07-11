@@ -25,7 +25,7 @@ module.exports.upload = (req, res) => {
                         }
                         else {
                             console.log('****UPLOAD SUCCESS****');
-                            res.send(jsonResponse(200, 'SUCCESSFULLY', URL + '/' + req.body.name + '/' + fileName));
+                            res.send(jsonResponse(200, 'SUCCESSFULLY', configPath.URL + '/' + req.body.name + '/' + fileName));
                         }
                     });
                 }
