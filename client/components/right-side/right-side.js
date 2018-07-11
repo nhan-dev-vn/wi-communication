@@ -4,6 +4,7 @@ let rightSideModule = 'right-side';
 function Controller(apiService, $timeout, $element){
     const WIDTH_IMAGE_THUMB = 130;
     let self = this;
+    let lengthUrl = apiService.URL.length;
     let textMessage = $('#text-message');
     let listMessage = $('.list-message');
     this.$onInit = function() {
@@ -36,7 +37,7 @@ function Controller(apiService, $timeout, $element){
     }
     this.fileName = function(path) {
         if(path)
-        return path.substring(61+self.curConver.name.length, path.length);
+        return path.substring(lengthUrl+34+self.curConver.name.length, path.length);
         return '';
     }
     this.upload = function (files) {
@@ -67,12 +68,13 @@ function Controller(apiService, $timeout, $element){
            
         });
     }
+
     this.thumb = function(path) {
-        let p = path.slice(27);
+        let p = path.slice(lengthUrl+1);
         return apiService.URL + '/api/thumb/'+p+'?token='+self.token;
     }
     this.download = function(path) {
-        let p = path.slice(27);
+        let p = path.slice(lengthUrl+1);
         return apiService.URL +'/api/download/'+p+'?token='+self.token;
     }
     socket.on('sendMessage', function(data) {
