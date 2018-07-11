@@ -1,6 +1,6 @@
 let moduleName = 'apiServiceModule';
 let serviceName = 'apiService';
-const URL = 'http://chat.i2g.cloud';
+const URL = 'http://chat.sflow.me';
 const LOGIN = URL + '/login';
 const REGISTER = URL + '/register';
 const GET_LIST_CONVERSATION = URL + '/api/list/conversation';
