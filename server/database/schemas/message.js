@@ -2,9 +2,9 @@ module.exports.define = function(sequelize, DataTypes) {
     return sequelize.define('Message', {
         id: {
             type: DataTypes.INTEGER,
+            autoIncrement: true,
             primaryKey: true,
-            allowNull: false,
-            autoIncrement: true
+            allowNull: false
         },
         idConversation: {
             type: DataTypes.INTEGER,
