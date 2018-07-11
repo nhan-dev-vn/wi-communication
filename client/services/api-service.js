@@ -1,6 +1,6 @@
 let moduleName = 'apiServiceModule';
 let serviceName = 'apiService';
-const URL = 'http://54.169.149.206:5001';
+const URL = 'http://chat.i2g.cloud';
 const LOGIN = URL + '/login';
 const REGISTER = URL + '/register';
 const GET_LIST_CONVERSATION = URL + '/api/list/conversation';

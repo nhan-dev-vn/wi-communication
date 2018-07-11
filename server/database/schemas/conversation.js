@@ -1,17 +1,14 @@
-'use strict';
-module.exports = (sequelize, DataTypes) => {
-    var Conversation = sequelize.define('Conversation', {
+module.exports.define = function(sequelize, DataTypes) {
+    return sequelize.define('Conversation', {
         id: {
             type: DataTypes.INTEGER,
-            autoIncrement: true,
+            primaryKey: true,
             allowNull: false,
-            primaryKey: true
+            autoIncremet: true
         },
         name: {
             type: DataTypes.STRING(100),
             allowNull: true
         }
     });
-
-    return Conversation;
 };

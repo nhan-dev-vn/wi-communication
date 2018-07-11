@@ -9,7 +9,7 @@ var configDb = require('config').get('db');
 var sequelize = new Sequelize(configDb.db_name, configDb.user, configDb.password, configDb.options);
 var Op = Sequelize.Op;
 var db = {};
-fs
+/*fs
     .readdirSync(path.join(__dirname, 'schemas'))
     .filter((file) => {
         return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
@@ -24,7 +24,10 @@ Object.keys(db).forEach((modelName) => {
         db[modelName].associate(db);
     }
 });
-
+*/
+db.User = require('./schemas/user.js').define(sequelize, Sequelize);
+db.Conversation = require('./schemas/conversation.js').define(sequelize, Sequelize);
+db.Message = require('./schemas/message.js').define(sequelize, Sequelize);
 
 db.Conversation.belongsToMany(db.User, {
     through : 'user_conversation',
@@ -59,7 +62,7 @@ db.Message.belongsTo(db.User, {
 sequelize.sync().then(()=>{
     console.log('\n============================ SYNC DATABASE SUCCESS ====================\n');
 }).catch(err=>{
-    console.log('\n============================ SYNC DATABASE ERROR ======================\n');
+    console.log('\n============================ SYNC DATABASE ERROR ======================\n', err);
 })
 
 db.sequelize = sequelize;
