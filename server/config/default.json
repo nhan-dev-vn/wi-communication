@@ -9,7 +9,7 @@
         "password": ""
     },
     "app": {
-        "port" : 5001,
+        "port" : 5002,
         "URL": "http://54.169.149.206:5001",
         "upload_dir": "database/upload"
     }
