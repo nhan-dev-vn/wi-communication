@@ -10,6 +10,7 @@ var ctrlUser = require('../controllers/user');
 
 var ctrlUpload = require('../controllers/upload.js');
 var ctrlThumb = require('../controllers/thumb.js');
+var ctrlImageOrigin = require('../controllers/imageOrigin.js');
 const auth = require('../controllers/authenticate');
 
 router.use(auth());
@@ -36,6 +37,9 @@ router.post('/upload', multipartyMiddleware, (req, res) => {
 //download
 router.get('/download/:folder/:fileName', (req, res) => {
 	res.download(PATH.join(__dirname, '../database/upload/' + req.params.folder + '/' + req.params.fileName), req.params.fileName.substr(33, req.params.fileName.length));
+});
+router.get('/imageOrigin/:folder/:fileName', (req, res) => {
+    ctrlImageOrigin.getImageOrigin(req, res);
 });
 //thumb image
 router.get('/thumb/:folder/:fileName', (req, res) => {

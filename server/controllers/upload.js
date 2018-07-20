@@ -12,6 +12,7 @@ module.exports.upload = (req, res) => {
     directoryExists(folderUpload, (error, result) => {
         if (!result) {
             fs.mkdir(folderUpload, function (err) {
+                console.log(fs.whoami);
                 if (err) {
                     res.send(jsonResponse(400, 'CREATE FOLDER FAIL: ' + err));
                 } else {
