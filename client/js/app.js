@@ -1,4 +1,4 @@
-var app = angular.module('wi-help-desk-chat', ['ngFileUpload', 'apiServiceModule', 'left-side', 'right-side', 'ngSanitize']);
+var app = angular.module('wi-help-desk-chat', ['ngFileUpload', 'apiServiceModule', 'left-side', 'right-side', 'ngSanitize', 'login', 'dashboard']);
 app.controller('appCtrl', function($scope, apiService, $timeout) {
     let listMessage = $('.list-message');
     $scope.isLogin = false;
