@@ -27,7 +27,10 @@
         <div ng-if="message.User.username!=rightSide.user.username" style="width: 70%; float: left;margin-bottom: 2px">
             <p style="font-weight: bold; margin-top: 3px; margin-bottom: 3px">{{message.User.username}}</p>
             <div ng-if="message.type!='image'" style="background: #e6e6e6; border-radius: 10px; display: inline-block; padding: 6px 8px ;max-width: 100%">
-                <p class="message" ng-bind-html="message.content" data-html="true" style=" display: inline;" ng-if="message.type=='text'">
+                <!-- <p class="message" ng-bind-html="message.content" data-html="true" style=" display: inline;" ng-if="message.type=='text'">
+                </p> -->
+                <p class="message" style=" display: inline;" ng-if="message.type=='text'">
+                    <chat-message text="message.content"></chat-message>
                 </p>
                 <p class="message" style=" display: inline;" ng-if="message.type=='file'">
                     <a href="{{rightSide.download(message.content)}}">
@@ -38,16 +41,25 @@
             </div>
             <div ng-if="message.type=='image'" style=" display: inline-block;max-width: 100%">
                 <p class="message" style=" display: inline;">
-                    <a href="{{rightSide.download(message.content)}}">
+                    <!-- <a href="{{rightSide.download(message.content)}}">
                         <img src="{{rightSide.thumb(message.content)}}" style="max-width: 70%; max-height: 40%;;border: 1px solid #ddd;border-radius: 4px;">
-                    </a>
+                    </a> -->
+                    <img-preview
+                     small-img-link="rightSide.thumb(message.content)"
+                     download-link="rightSide.download(message.content)"
+                     full-img-link="rightSide.getImageOrigin(message.content)">
+                    </img-preview>
                 </p>
             </div>
         </div>
         <div ng-if="message.User.username==rightSide.user.username" style="width: 70%; float: right;margin-bottom: 2px">
             <div ng-if="message.type!='image'" style="background: #419be8; border-radius: 10px; float: right; display: inline-block;padding: 6px 8px;max-width: 100%">
-                <p class="message" ng-bind-html="message.content" data-html="true" style="color: #fff;display: inline; " ng-if="message.type=='text'">
-                </p>
+                <!-- <p class="message" ng-bind-html="message.content" data-html="true" style="color: #fff;display: inline; " ng-if="message.type=='text'">
+                </p> -->
+
+                <p class="message" style=" display: inline;" ng-if="message.type=='text'">
+                        <chat-message text="message.content"></chat-message>
+                    </p>
                 <p class="message" style=" display: inline;" ng-if="message.type=='file'">
                     <a href="{{rightSide.download(message.content)}}" style="color: #fff">
                         <i class="glyphicon glyphicon-circle-arrow-down"></i>
@@ -57,9 +69,15 @@
             </div>
             <div ng-if="message.type=='image'" style=" text-align: right; float: right; display: inline-block;padding: 6px 8px;max-width: 100%">
                 <p class="message" style=" display: inline;">
-                    <a href="{{rightSide.download(message.content)}}">
+                    <!-- <a href="{{rightSide.download(message.content)}}">
                         <img src="{{rightSide.thumb(message.content)}}" style="max-width: 70%; max-height: 40%;border: 1px solid #ddd;border-radius: 4px;">
-                    </a>
+                    </a> -->
+
+                    <img-preview
+                     small-img-link="rightSide.thumb(message.content)"
+                     download-link="rightSide.download(message.content)"
+                     full-img-link="rightSide.getImageOrigin(message.content)">
+                    </img-preview>
                 </p>
             </div>
         </div>
