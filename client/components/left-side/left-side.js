@@ -10,6 +10,16 @@ function Controller(apiService, $timeout, $element){
         return path.substring(61+self.curConver.name.length, path.length);
         return '';
     }
+    this.seenConv = function(conver) {
+        self.curConver = conver
+        appService.getPendingConversation({
+            idUser: self.user.id,
+            idConversation: self.curConver.id
+        })
+        console.log({user:self.user.id});
+        console.log({listConver:self.listConver});
+        console.log({curConver:self.curConver.id})
+    }
     socket.on('join-help-desk', function(data) {
         console.log('join-help-desk', data);
         apiService.getConversation(self.token, {name: data.name}, function(res) {
