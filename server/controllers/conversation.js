@@ -4,6 +4,7 @@ var User = models.User;
 var Conversation = models.Conversation;
 var Message = models.Message;
 var Op = models.Op;
+var PendingConversation = models.PendingConversation;
 var socket_io = require('../socket.io/socket.io').socket_io;
 
 module.exports.getConversation = (req, res) => {
@@ -61,5 +62,51 @@ module.exports.getListConversation = (req, res) => {
 	}).catch(err => {
 		console.error(err);
 		res.send(response(400, 'SOMETHING WENT WRONG: ' + err));
+	})
+}
+
+
+module.exports.getPendingConversation = (req, res) => {
+	const { idUser } = req.body;
+
+	if(!idUser) return res.send(response(400, 'idUser is required', 'idUser is required'));
+
+	PendingConversation.findAll({
+		where: {
+			idUser
+		}
+	}).then(conversations => {
+
+		//remove duplicate conversation
+		const set = {};
+
+		const _conv = conversations.filter((conv, i) => {
+			if(i === 0 || !set[conv.idConversation]) {
+				set[conv.idConversation] = true;
+				return true;
+			}
+			
+			return false;
+		})
+
+		res.send(response(200, 'SUCCESSFULLY', _conv));
+	})
+}
+
+module.exports.seenConversation = (req, res) => {
+	const {idUser, idConversation} = req.body;
+
+	if(!idUser) return res.send(response(400, 'idUser is required', 'idUser is required'));
+	if(!idConversation) return res.send(response(400, 'idConversation is required', 'idConversation is required'));
+
+	PendingConversation.destroy({
+		where: {
+			idConversation,
+			idUser
+		}
+	}).then(() => {
+		res.send(response(200, 'SUCCESS', 'SUCCESS'))
+	}).catch((e) => {
+		res.send(response(400, 'SOME THING WENT WRONG ' + e, 'SOME THING WENT WRONG ' + e));
 	})
 }

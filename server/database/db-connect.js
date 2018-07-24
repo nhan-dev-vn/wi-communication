@@ -28,6 +28,7 @@ Object.keys(db).forEach((modelName) => {
 db.User = require('./schemas/user.js').define(sequelize, Sequelize);
 db.Conversation = require('./schemas/conversation.js').define(sequelize, Sequelize);
 db.Message = require('./schemas/message.js').define(sequelize, Sequelize);
+db.PendingConversation = require('./schemas/pendingConversation').define(sequelize, Sequelize);
 
 db.Conversation.belongsToMany(db.User, {
     through : 'user_conversation',
@@ -37,6 +38,48 @@ db.User.belongsToMany(db.Conversation, {
     through : 'user_conversation',
     foreignKey: 'user_id'
 });
+
+// Add user pending message
+
+// db.User.belongsToMany(db.Conversation, {
+//     through: 'user_conversation_pending',
+//     foreignKey: 'pending_user_id',
+//     onDelete: 'CASCADE'
+// })
+
+// db.Conversation.belongsToMany(db.User, {
+//     through : 'user_conversation_pending',
+//     foreignKey: 'pending_conversation_id',
+//     onDelete: 'CASCADE'
+// });
+
+db.User.hasMany(db.PendingConversation, {
+    foreignKey: {
+        name: 'idUser',
+        allowNull: false
+    }
+})
+db.Conversation.hasMany(db.PendingConversation, {
+    foreignKey: {
+        name: 'idConversation',
+        allowNull: false
+    }
+})
+db.PendingConversation.belongsTo(db.User, {
+    foreignKey: {
+        name: 'idUser',
+        allowNull: false
+    }
+})
+db.PendingConversation.belongsTo(db.User, {
+    foreignKey: {
+        name: 'idConversation',
+        allowNull: false
+    }
+})
+
+// End Add user pending message
+
 db.Conversation.hasMany(db.Message, {
     foreignKey: {
         name: 'idConversation',

@@ -46,4 +46,10 @@ router.get('/thumb/:folder/:fileName', (req, res) => {
     ctrlThumb.thumb(req, res);
 });
 
+//getPendingConversation
+router.post('/conversation/get-pending-message', ctrlConversation.getPendingConversation);
+
+//seen conversation
+router.post('/conversation/seen', ctrlConversation.seenConversation);
+
 module.exports = router;
