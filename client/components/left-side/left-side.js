@@ -1,7 +1,7 @@
 let leftSideComponent = 'leftSide';
 let leftSideModule = 'left-side';
 
-function Controller(apiService, $timeout, $element){
+function Controller(apiService, $timeout, $scope){
     let self = this;
     this.$onInit = function() {
     }
@@ -10,6 +10,15 @@ function Controller(apiService, $timeout, $element){
         return path.substring(61+self.curConver.name.length, path.length);
         return '';
     }
+    this.lastMessFontWeight = function(conver) {
+        return conver.lastMessFontWeight? conver.lastMessFontWeight:"100";
+    }
+    $scope.$watch(function() {return self.curConver;}, function( newValue, oldValue) {
+        if(newValue && newValue.lastMessFontWeight=="bolder") {
+            newValue.lastMessFontWeight = "100";
+            self.numNewMess --;
+        }
+    });
     socket.on('join-help-desk', function(data) {
         console.log('join-help-desk', data);
         apiService.getConversation(self.token, {name: data.name}, function(res) {
@@ -18,6 +27,15 @@ function Controller(apiService, $timeout, $element){
                 socket.emit('join-room', {username: self.user.username, idConversation: data.id});
             }
         });
+    });
+    socket.on('sendMessage', function(data) {
+        $timeout(function() {
+            let con = self.listConver.filter(function(conver) { return conver.id==data.idConversation; })[0];
+            if(self.curConver.id != con.id && (!con.lastMessFontWeight || con.lastMessFontWeight=="100")) {
+                con.lastMessFontWeight = "bolder";
+                self.numNewMess ++;
+            }
+        })
     });
 }
 
@@ -30,6 +48,7 @@ appLeft.component(leftSideComponent, {
         token: '<',
         user: '<',
         listConver: '<',
-        curConver: '='
+        curConver: '=',
+        numNewMess: '<'
     }
 });

@@ -3,6 +3,7 @@ var response = require('./response');
 var User = models.User;
 var Conversation = models.Conversation;
 var Message = models.Message;
+var NewMessage = models.NewMessage;
 var Op = models.Op;
 var socket_io = require('../socket.io/socket.io').socket_io;
 var async = require('async');
@@ -20,7 +21,12 @@ module.exports.getConversation = (req, res) => {
 	}).then(conver => {
 		if (conver) {
 			conver.addUsers([req.decoded.id]);
-			res.send(response(200, 'SUCCESSFULLY', {user: req.decoded, conver: conver}));
+			getNewMess(req.decoded.id, req.body.name, function(rs) {
+				if(res==1) {
+					conver.lassMessFontWeight = "bolder";
+				}
+				res.send(response(200, 'SUCCESSFULLY', {user: req.decoded, conver: conver}));
+			})
 		} else {
 			Conversation.create({
 				name: req.body.name
@@ -41,6 +47,7 @@ module.exports.getConversation = (req, res) => {
 		res.send(response(400, 'SOMETHING WENT WRONG: ' + err));
 	})
 }
+
 module.exports.getListConversation = (req, res) => {
 	Conversation.findAll({
 		where: {
@@ -55,13 +62,20 @@ module.exports.getListConversation = (req, res) => {
         order: [[Message, 'sendAt', 'ASC']]
 	}).then(list => {
 		if (list) {
+			let numNewMess = 0;
 			async.forEachOfSeries(list, function(conver, i, cb) {
 				conver.addUsers([req.decoded.id]);
-				cb();
+				getNewMess(req.decoded.id, conver.name, function(rs) {
+					if(rs==1) {
+						conver.dataValues.lastMessFontWeight = "bolder";
+						numNewMess++;
+					}
+					cb();
+				})
 			}, function(err) {
 				if(err) res.send(response(400, 'SOMETHING WENT WRONG: ' + err));
 				else {
-					res.send(response(200, 'SUCCESSFULLY', list));
+					res.send(response(200, 'SUCCESSFULLY', {list: list, numNewMess: numNewMess}));
 				}
 			})
 		} else {
@@ -72,4 +86,18 @@ module.exports.getListConversation = (req, res) => {
 		console.error(err);
 		res.send(response(400, 'SOMETHING WENT WRONG: ' + err));
 	})
+}
+
+function getNewMess(idUser, nameConversation, cb) {
+	NewMessage.findOne({
+		where: {
+			nameConversation: nameConversation,
+			idUser: idUser
+		}
+	}).then(newMess => {
+		if(newMess) cb(1);
+		else cb(-1);
+	}).catch(err => {
+		cb(-1);
+	});
 }

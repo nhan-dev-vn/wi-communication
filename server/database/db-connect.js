@@ -9,25 +9,11 @@ var configDb = require('config').get('db');
 var sequelize = new Sequelize(configDb.db_name, configDb.user, configDb.password, configDb.options);
 var Op = Sequelize.Op;
 var db = {};
-/*fs
-    .readdirSync(path.join(__dirname, 'schemas'))
-    .filter((file) => {
-        return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
-    })
-    .forEach((file) => {
-        var model = sequelize['import'](path.join(__dirname, 'schemas',file));
-        db[model.name] = model;
-    });
 
-Object.keys(db).forEach((modelName) => {
-    if (db[modelName].associate) {
-        db[modelName].associate(db);
-    }
-});
-*/
 db.User = require('./schemas/user.js').define(sequelize, Sequelize);
 db.Conversation = require('./schemas/conversation.js').define(sequelize, Sequelize);
 db.Message = require('./schemas/message.js').define(sequelize, Sequelize);
+db.NewMessage = require('./schemas/newMessage.js').define(sequelize, Sequelize);
 
 db.Conversation.belongsToMany(db.User, {
     through : 'user_conversation',

@@ -25,7 +25,8 @@ app.controller('appCtrl', function($scope, apiService, $timeout) {
                 $scope.isLogin = true;
                 apiService.getListConversation(res.token, {username: res.user.username}, function(res) {
                     if(res) {
-                        $scope.listConver = res;
+                        $scope.listConver = res.list;
+                        $scope.numNewMess = res.numNewMess;
                         $scope.listConver.forEach(function(conver) {
                             socket.emit('join-room', {username: $scope.user.username, idConversation: conver.id});
                         });
@@ -33,6 +34,7 @@ app.controller('appCtrl', function($scope, apiService, $timeout) {
                     }else{
                         $scope.listConver = [];
                         $scope.curConver = {};
+                        $scope.numNewMess = 0;
                     }
                 });
             }
