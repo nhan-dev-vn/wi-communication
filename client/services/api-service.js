@@ -1,12 +1,13 @@
 let moduleName = 'apiServiceModule';
 let serviceName = 'apiService';
 // const URL = 'http://chat.sflow.me';
-const URL = 'http://192.168.12.116:5001';
+const URL = 'http://192.168.23.100:5001';
 const LOGIN = URL + '/login';
 const REGISTER = URL + '/register';
 const GET_LIST_CONVERSATION = URL + '/api/list/conversation';
 const GET_CONVERSATION = URL + '/api/conversation';
 const POST_MESSAGE = URL + '/api/message/new';
+const SEEN_MESSAGE = URL + '/api/seenMessage'
 const UPLOAD = URL + '/api/upload';
 const THUMB = URL + '/api/thumb';
 angular.module(moduleName, []).service(serviceName, function ($http, Upload) {
@@ -76,6 +77,9 @@ angular.module(moduleName, []).service(serviceName, function ($http, Upload) {
     }
     this.postMessage = (data, token, cb) => {
         doPost(POST_MESSAGE, token, data, cb);
+    }
+    this.seenMessage = (data, token, cb) => {
+        doPost(SEEN_MESSAGE, token, data, cb);
     }
     this.upload = (data, token, cb) => {
         Upload.upload({

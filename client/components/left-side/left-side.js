@@ -13,12 +13,17 @@ function Controller(apiService, $timeout, $scope){
     this.lastMessFontWeight = function(conver) {
         return conver.lastMessFontWeight? conver.lastMessFontWeight:"100";
     }
-    $scope.$watch(function() {return self.curConver;}, function( newValue, oldValue) {
-        if(newValue && newValue.lastMessFontWeight=="bolder") {
-            newValue.lastMessFontWeight = "100";
-            self.numNewMess --;
+    this.changeCurConver = function(conver) {
+        self.curConver = conver;
+        if(self.curConver.lastMessFontWeight=='bolder') {
+            apiService.seenMessage({
+                idUser: self.user.id,
+                nameConversation: self.curConver.name
+            }, self.token, function() {});
+            self.curConver.lastMessFontWeight='100';
+            self.numNewMess--;
         }
-    });
+    }
     socket.on('join-help-desk', function(data) {
         console.log('join-help-desk', data);
         apiService.getConversation(self.token, {name: data.name}, function(res) {
@@ -31,7 +36,10 @@ function Controller(apiService, $timeout, $scope){
     socket.on('sendMessage', function(data) {
         $timeout(function() {
             let con = self.listConver.filter(function(conver) { return conver.id==data.idConversation; })[0];
-            if(self.curConver.id != con.id && (!con.lastMessFontWeight || con.lastMessFontWeight=="100")) {
+            if(con.id==self.curConver.id && $('#text-message').is(':focus')) {
+                
+            }
+            else if(!con.lastMessFontWeight || con.lastMessFontWeight=="100") {
                 con.lastMessFontWeight = "bolder";
                 self.numNewMess ++;
             }
@@ -47,8 +55,8 @@ appLeft.component(leftSideComponent, {
     bindings: {
         token: '<',
         user: '<',
-        listConver: '<',
+        listConver: '=',
         curConver: '=',
-        numNewMess: '<'
+        numNewMess: '='
     }
 });

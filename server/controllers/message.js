@@ -66,3 +66,16 @@ function abc(idUser, idConversation, cb) {
 		cb(-1);
 	});
 }
+
+module.exports.seenMessage = (req, res) => {
+	NewMessage.destroy({
+		where: {
+			idUser: req.body.idUser,
+			nameConversation: req.body.nameConversation
+		}
+	}).then(rs => {
+		res.send(response(200, 'SUCCESSFULLY'));
+	}).catch(err => {
+		res.send(response(400, 'SOMETHING WENT WRONG: '+ err));
+	});
+}

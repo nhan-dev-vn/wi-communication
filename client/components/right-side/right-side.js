@@ -33,6 +33,16 @@ function Controller(apiService, $timeout, $element){
             send(e);
         }
     });
+    this.enter = function() {
+        if(self.curConver.lastMessFontWeight=='bolder') {
+            self.curConver.lastMessFontWeight='100';
+            self.numNewMess--;
+            apiService.seenMessage({
+                idUser: self.user.id,
+                nameConversation: self.curConver.name
+            }, self.token, function() {});
+        }
+    }
     this.sendMessage = function() {
         send();
     }
@@ -98,7 +108,8 @@ appRight.component(rightSideComponent, {
     bindings: {
         token: '<',
         user: '<',
-        listConver: '<',
-        curConver: '='
+        listConver: '=',
+        curConver: '=',
+        numNewMess: '='
     }
 });

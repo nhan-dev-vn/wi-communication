@@ -22,6 +22,10 @@ router.post('/user', (req, res) => {
 router.post('/message/new', (req,res) => {
 	ctrlMessage.postMessage(req,res);
 });
+//seen message
+router.post('/seenMessage', (req,res) => {
+	ctrlMessage.seenMessage(req,res);
+});
 //Conversation
 router.post('/conversation', (req, res) => {
 	ctrlConversation.getConversation(req, res);
