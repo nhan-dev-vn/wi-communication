@@ -1,4 +1,4 @@
-var app = angular.module('wi-help-desk-chat', ['ngFileUpload', 'apiServiceModule', 'left-side', 'right-side', 'ngSanitize']);
+var app = angular.module('wi-help-desk-chat', ['ngFileUpload', 'apiServiceModule', 'left-side', 'right-side', 'ngSanitize','chat-message', 'img-preview']);
 app.controller('appCtrl', function($scope, apiService, $timeout) {
     let listMessage = $('.list-message');
     $scope.isLogin = false;
@@ -27,10 +27,15 @@ app.controller('appCtrl', function($scope, apiService, $timeout) {
                     if(res) {
                         $scope.listConver = res.list;
                         $scope.numNewMess = res.numNewMess;
-                        $scope.listConver.forEach(function(conver) {
-                            socket.emit('join-room', {username: $scope.user.username, idConversation: conver.id});
-                        });
-                        $scope.curConver = $scope.listConver[0];
+                        if($scope.listConver && $scope.listConver.length) {
+                            $scope.listConver.forEach(function(conver) {
+                                socket.emit('join-room', {username: $scope.user.username, idConversation: conver.id});
+                            });
+                            $scope.curConver = $scope.listConver[0];
+                        } else {
+                            $scope.curConver = {};
+                        }
+                        
                     }else{
                         $scope.listConver = [];
                         $scope.curConver = {};

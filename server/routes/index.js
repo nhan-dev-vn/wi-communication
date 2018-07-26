@@ -13,7 +13,7 @@ var ctrlThumb = require('../controllers/thumb.js');
 var ctrlImageOrigin = require('../controllers/imageOrigin.js');
 const auth = require('../controllers/authenticate');
 
-router.use(auth());
+// router.use(auth());
 //user
 router.post('/user', (req, res) => {
 	ctrlUser.getUser(req,res);
