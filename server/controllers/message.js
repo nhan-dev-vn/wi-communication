@@ -17,7 +17,7 @@ module.exports.postMessage = (req, res) => {
         sendAt: req.body.sendAt
 	}).then(message => {
 		if (message) {
-			abc(req.decoded.id, req.body.idConversation, function(rs) {
+			abc(req.body.idSender, req.body.idConversation, function(rs) {
 				if(rs==1) {
 					appProfile.io.in(req.body.idConversation).emit('sendMessage', req.body);
 					res.send(response(200, 'SUCCESSFULLY', message));
@@ -40,30 +40,30 @@ function abc(idUser, idConversation, cb) {
 			id: idConversation
 		},
 		include: {
-			model: User,
-			where: {
-				id: {[op.ne]: idUser}
-			}
+			model: User
 		}
 	}).then(conver => {
 		if(conver) {
+			if(conver.dataValues.Users)
 			async.eachOfSeries(conver.dataValues.Users, function(user, i, done) {
+				if(user.dataValues.id!=idUser)
 				NewMessage.create({
 					idUser: user.dataValues.id,
 					nameConversation: conver.dataValues.name
 				}).then(newMess => {
 					if(newMess) done();
-					else cb(-1);
+					else console.log('new Mess empty') && cb(-1)  ;
 				}).catch(err => {
-					cb(-1);
-				});
+					console.log('create new mess err', err) && cb(-1) ;
+				});else done();
 			}, function(err) {
-				if(err) cb(-1);
+				if(err)  console.log('async', err) && cb(-1);
 				cb(1);
 			})
-		} else cb(-1);
+			else cb(1);
+		} else console.log('conver null') && cb(-1);
 	}).catch(err => {
-		cb(-1);
+		console.log('find conver', err) && cb(-1) ;
 	});
 }
 

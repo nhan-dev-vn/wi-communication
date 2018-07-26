@@ -20,12 +20,14 @@ module.exports.getConversation = (req, res) => {
         order: [[Message, 'sendAt', 'ASC']]
 	}).then(conver => {
 		if (conver) {
+			let numNewMess = 0;
 			conver.addUsers([req.decoded.id]);
 			getNewMess(req.decoded.id, req.body.name, function(rs) {
-				if(res==1) {
-					conver.lassMessFontWeight = "bolder";
+				if(rs==1) {
+					numNewMess++;
+					conver.dataValues.lastMessFontWeight = "bolder";
 				}
-				res.send(response(200, 'SUCCESSFULLY', {user: req.decoded, conver: conver}));
+				res.send(response(200, 'SUCCESSFULLY', {user: req.decoded, conver: conver, numNewMess: numNewMess}));
 			})
 		} else {
 			Conversation.create({

@@ -17,7 +17,6 @@ SOCKET_IO.connect = function (io) {
             }
             if(!check) listRoom[data.idConversation].push(data.username);
             io.in(data.idConversation).emit('send-members-online', listRoom[data.idConversation]);
-            console.log('a user connect', listRoom);
         });
         socket.on('sendMessage', function (data) {
             io.in(data.idConversation).emit('sendMessage', data);
@@ -30,7 +29,6 @@ SOCKET_IO.connect = function (io) {
                 })
             }
             io.in(data.idConversation).emit('off-project', data);
-            console.log('a user disconnect', listRoom);
         });
         socket.on('disconnect', function() {
             listRoom.forEach(function(room, index){
@@ -40,7 +38,6 @@ SOCKET_IO.connect = function (io) {
                 if(!room.length) listRoom.splice(index, 1);
             });
             socket.to(socket.idRoom).emit('disconnected', socket.username);
-            console.log('a user disconnect', listRoom);
         });
     });
 };
