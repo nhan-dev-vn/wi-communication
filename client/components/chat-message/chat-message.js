@@ -160,6 +160,12 @@
             preProcess();
         }
 
+        self.$onChanges = function () {
+            // preProcess();
+            // console.log('icon change');
+            preProcess();
+        }
+
         function preProcess() {
             self.text = replaceText(self.text);
             // console.log({'self.text': self.text})

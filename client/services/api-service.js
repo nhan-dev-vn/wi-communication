@@ -1,8 +1,8 @@
 let moduleName = 'apiServiceModule';
 let serviceName = 'apiService';
 // const URL = 'http://chat.sflow.me';
-const URL = 'http://127.0.0.1:5001';
-// const URL = 'http://192.168.11.109:5001';
+// const URL = 'http://127.0.0.1:5001';
+const URL = 'http://192.168.11.109:5001';
 const LOGIN = URL + '/login';
 const REGISTER = URL + '/register';
 const GET_LIST_CONVERSATION = URL + '/api/list/conversation';

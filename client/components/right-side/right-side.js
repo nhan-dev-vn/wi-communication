@@ -15,7 +15,7 @@ function Controller(apiService, $timeout, $element){
     function send(e) {
         let content = textMessage.val().split('\n').join('<br/>');
         let message = {
-            content: content,
+            content: preventXSS(content),
             type: 'text',
             idSender: self.user.id,
             idConversation: self.curConver.id,
@@ -98,6 +98,33 @@ function Controller(apiService, $timeout, $element){
             }, 500);
         })
     });
+
+    this.getImageOrigin = function(path) {
+        let p = path.slice(lengthUrl+1);
+        return apiService.URL + '/api/imageOrigin/'+p+'?token='+self.token;
+    }
+
+    function preventXSS(text) {
+        const rule = {
+            '<': {
+                regex: /\</g,
+                replaceStr: '%3C'
+            }, 
+            '>' : {
+                regex: /\>/g,
+                replaceStr: '%3E'
+            }
+        };
+    
+        text = text.replace(rule['>'].regex, rule['>'].replaceStr);
+        console.log({text});
+        text = text.replace(rule['<'].regex, rule['<'].replaceStr);
+        console.log({text});
+        
+    
+        return text;
+    
+    }
 }
 
 let appRight = angular.module(rightSideModule, []);
