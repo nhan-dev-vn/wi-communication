@@ -157,7 +157,7 @@
 <div class="img-preview">
   <img
    class="main-img" 
-   src="{{imgPreview.smallImgLink}}" 
+   ng-src="{{imgPreview.smallImgLink}}" 
    alt="failed to load image" 
    style="width:100%;max-width:300px;z-index: 1002;"
    ng-click="imgPreview.imgOnclick()">
@@ -180,7 +180,7 @@
     </span>
     <figure class="zoom" id="{{imgPreview._zoomBackground}}">
         <img 
-        src="{{imgPreview.fullImgLink}}" 
+        ng-src="{{imgPreview.fullImgLink}}" 
         class="modal-content" 
         id="{{imgPreview._modalImg}}"
         alt="Cannot display image">
