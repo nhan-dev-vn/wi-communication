@@ -158,8 +158,8 @@
                     //the img-size if 90% //css-file
                     //so default is img hide => zoom => change coord of center => zoom custom
                     // zoomer.style.backgroundImage = `url('${self.fullImgLink}')`;
-                    e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX
-                    e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX
+                    e.offsetX ? offsetX = e.offsetX : offsetX = e.touches? e.touches[0].pageX : 0
+                    e.offsetY ? offsetY = e.offsetY : offsetX = e.touches? e.touches[0].pageX : 0
                     x = offsetX / zoomer.offsetWidth * 100
                     y = offsetY / zoomer.offsetHeight * 100
                     zoomer.style.backgroundPosition = x + '% ' + y + '%';

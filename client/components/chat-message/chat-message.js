@@ -160,10 +160,16 @@
             preProcess();
         }
 
-        self.$onChanges = function () {
+        self.$onChanges = function (obj) {
             // preProcess();
             // console.log('icon change');
             preProcess();
+            // if(obj.fontWeight) {
+            //     self.fontWeight = obj.fontWeight.currentValue
+            //     console.log({'self.fontWeight':self.fontWeight});
+            //     console.log('change font-weigth')
+            // }
+            // console.log('change')
         }
 
         function preProcess() {
@@ -319,7 +325,8 @@
         controller: Controller,
         controllerAs: componentName,
         bindings: {
-            text: '<'
+            text: '<',
+            fontWeight: '<'
         }
     });
 
