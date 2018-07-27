@@ -47,7 +47,7 @@ app.controller('appCtrl', function($scope, apiService, $timeout, ui) {
     }
     $scope.$watch('curConver', function(newVal, oldVal, scope) {
         ui.showConversation()
-        console.log('watch')
+        //console.log('watch')
     })
     
 });

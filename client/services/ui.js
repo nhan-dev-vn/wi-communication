@@ -16,15 +16,15 @@
             })
         }
 
-        this.seenMessage = (msg) => {
-            $rootScope.$emit(SEEN_MESSAGE, msg)
-        }
+        // this.seenMessage = (msg) => {
+        //     $rootScope.$emit(SEEN_MESSAGE, msg)
+        // }
 
-        this.onSeenMessage = (cb) => {
-            $rootScope.$on(SEEN_MESSAGE, (e, dat) => {
-                cb(dat)
-            })
-        }
+        // this.onSeenMessage = (cb) => {
+        //     $rootScope.$on(SEEN_MESSAGE, (e, dat) => {
+        //         cb(dat)
+        //     })
+        // }
 
 
         return this;

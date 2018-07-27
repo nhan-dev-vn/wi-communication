@@ -15,8 +15,8 @@ function Controller(apiService, $timeout, ui){
         ui.onShowConversation(conver => {
             $timeout(function () {
                 const convFrame = document.querySelector('.list-message')
-                console.log({ convFrame })
-                console.log(convFrame.scrollHeight)
+                //console.log({ convFrame })
+                //console.log(convFrame.scrollHeight)
                 convFrame.scrollTo(0, convFrame.scrollHeight * 100)
             }, 500);
             

@@ -326,7 +326,7 @@
         controllerAs: componentName,
         bindings: {
             text: '<',
-            fontWeight: '<'
+            // fontWeight: '<'
         }
     });
 
