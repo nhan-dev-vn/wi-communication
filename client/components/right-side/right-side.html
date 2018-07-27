@@ -56,7 +56,7 @@
             <div ng-if="message.type!='image'" style="background: #419be8; border-radius: 10px; float: right; display: inline-block;padding: 6px 8px;max-width: 100%">
                 <!-- <p class="message" ng-bind-html="message.content" data-html="true" style="color: #fff;display: inline; " ng-if="message.type=='text'">
                 </p> -->
-                <p class="message" style=" display: inline;" ng-if="message.type=='text'">
+                <p class="message" style=" display: inline;color: white;" ng-if="message.type=='text'">
                     <chat-message text="message.content"></chat-message>
                 </p>
                 <p class="message" style=" display: inline;" ng-if="message.type=='file'">

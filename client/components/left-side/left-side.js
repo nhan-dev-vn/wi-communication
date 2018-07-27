@@ -1,7 +1,7 @@
 let leftSideComponent = 'leftSide';
 let leftSideModule = 'left-side';
 
-function Controller(apiService, $timeout, $scope){
+function Controller(apiService, $timeout, ui){
     let self = this;
     this.$onInit = function() {
     }
@@ -15,7 +15,11 @@ function Controller(apiService, $timeout, $scope){
     }
     this.changeCurConver = function(conver) {
         self.curConver = conver;
+        ui.showConversation(conver)
         if(self.curConver.lastMessFontWeight=='bolder') {
+            //emit event seen message
+            ui.seenMessage()
+
             apiService.seenMessage({
                 idUser: self.user.id,
                 nameConversation: self.curConver.name
