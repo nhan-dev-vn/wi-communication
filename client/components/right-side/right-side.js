@@ -1,30 +1,43 @@
 let rightSideComponent = 'rightSide';
 let rightSideModule = 'right-side';
 
-function Controller(apiService, $timeout, $element){
+function Controller(apiService, $timeout, ui){
     const WIDTH_IMAGE_THUMB = 130;
     let self = this;
     let lengthUrl = apiService.URL.length;
     let textMessage = $('#text-message');
     let listMessage = $('.list-message');
     this.$onInit = function() {
-        $timeout(function(){
-            listMessage.scrollTop(listMessage[0].scrollHeight);
-        }, 500);
+        // $timeout(function(){
+        //     listMessage.scrollTop(listMessage[0].scrollHeight);
+        // }, 500);
+
+        ui.onShowConversation(conver => {
+            $timeout(function () {
+                const convFrame = document.querySelector('.list-message')
+                //console.log({ convFrame })
+                //console.log(convFrame.scrollHeight)
+                convFrame.scrollTo(0, convFrame.scrollHeight * 100)
+            }, 500);
+
+        })
     }
     function send(e) {
-        let content = textMessage.val().split('\n').join('<br/>');
-        let message = {
-            content: preventXSS(content),
-            type: 'text',
-            idSender: self.user.id,
-            idConversation: self.curConver.id,
-            User: self.user,
-            sendAt: new Date((new Date()).getTime()),
-            nameConversation: self.curConver.name
-        };
-        apiService.postMessage(message, self.token, function (res) {
-        });
+        // let content = textMessage.val().split('\n').join('<br/>');
+        let content = textMessage.val();
+        if(content) {
+            let message = {
+                content: preventXSS(content),
+                type: 'text',
+                idSender: self.user.id,
+                idConversation: self.curConver.id,
+                User: self.user,
+                sendAt: new Date((new Date()).getTime()),
+                nameConversation: self.curConver.name
+            };
+            apiService.postMessage(message, self.token, function (res) {
+            });
+        }
         e && e.preventDefault();
         textMessage.val('');
     }
@@ -37,6 +50,7 @@ function Controller(apiService, $timeout, $element){
         if(self.curConver.lastMessFontWeight=='bolder') {
             self.curConver.lastMessFontWeight='100';
             self.numNewMess--;
+            ui.seenMessage()
             apiService.seenMessage({
                 idUser: self.user.id,
                 nameConversation: self.curConver.name
@@ -70,14 +84,14 @@ function Controller(apiService, $timeout, $element){
                         nameConversation: self.curConver.name
                     }
                     apiService.postMessage(message, self.token, (res) => {
-                            _done();
+                        _done();
                     });
                 } else {
                     console.log('UPLOAD FAIL');
                 }
             })
         }, (err) => {
-           
+
         });
     }
 
@@ -108,22 +122,20 @@ function Controller(apiService, $timeout, $element){
         const rule = {
             '<': {
                 regex: /\</g,
-                replaceStr: '%3C'
-            }, 
+                replaceStr: '&lt'
+            },
             '>' : {
                 regex: /\>/g,
-                replaceStr: '%3E'
+                replaceStr: '&gt'
             }
         };
-    
+
         text = text.replace(rule['>'].regex, rule['>'].replaceStr);
-        console.log({text});
         text = text.replace(rule['<'].regex, rule['<'].replaceStr);
-        console.log({text});
-        
-    
+
+
         return text;
-    
+
     }
 }
 

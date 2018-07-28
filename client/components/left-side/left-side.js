@@ -1,7 +1,7 @@
 let leftSideComponent = 'leftSide';
 let leftSideModule = 'left-side';
 
-function Controller(apiService, $timeout, $scope){
+function Controller(apiService, $timeout, ui){
     let self = this;
     this.$onInit = function() {
     }
@@ -15,6 +15,7 @@ function Controller(apiService, $timeout, $scope){
     }
     this.changeCurConver = function(conver) {
         self.curConver = conver;
+        ui.showConversation(conver)
         if(self.curConver.lastMessFontWeight=='bolder') {
             apiService.seenMessage({
                 idUser: self.user.id,
@@ -37,7 +38,7 @@ function Controller(apiService, $timeout, $scope){
         $timeout(function() {
             let con = self.listConver.filter(function(conver) { return conver.id==data.idConversation; })[0];
             if(con.id==self.curConver.id && $('#text-message').is(':focus')) {
-                
+
             }
             else if(!con.lastMessFontWeight || con.lastMessFontWeight=="100") {
                 con.lastMessFontWeight = "bolder";

@@ -1,5 +1,5 @@
-var app = angular.module('wi-help-desk-chat', ['ngFileUpload', 'apiServiceModule', 'left-side', 'right-side', 'ngSanitize','chat-message', 'img-preview']);
-app.controller('appCtrl', function($scope, apiService, $timeout) {
+var app = angular.module('wi-help-desk-chat', ['ngFileUpload', 'apiServiceModule', 'left-side', 'right-side', 'ngSanitize','chat-message', 'img-preview', 'uiModule']);
+app.controller('appCtrl', function($scope, apiService, $timeout, ui) {
     let listMessage = $('.list-message');
     $scope.isLogin = false;
     $scope.register = function(name, password) {
@@ -45,5 +45,9 @@ app.controller('appCtrl', function($scope, apiService, $timeout) {
             }
         });
     }
+    $scope.$watch('curConver', function(newVal, oldVal, scope) {
+        ui.showConversation()
+        //console.log('watch')
+    })
     
 });

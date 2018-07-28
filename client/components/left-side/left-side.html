@@ -8,19 +8,20 @@
     <span ng-show="leftSide.numNewMess>0" style="background: red" class="badge badge-danger">{{leftSide.numNewMess}}</span>
 </div>
 <div style="text-align: center;" class="row">
-    <input style="width: 90%; border: 1px solid #eee; border-radius: 30px; padding: 5px" 
+    <input style="width: 90%; border: 1px solid #eee; border-radius: 30px; padding: 5px"
             ng-model="filterByName" type="text" placeholder="Search conversation by name">
 </div>
 <div class="row">
     <ul style="padding: 10px">
         <li style="padding: 5px; cursor: pointer;" ng-show="conver.Messages.length>=1"
             ng-repeat="conver in leftSide.listConver | filter: {name: filterByName} " ng-click="leftSide.changeCurConver(conver)">
-            <p style="font-size: 16px;overflow: hidden; text-overflow: ellipsis; width: 80%; white-space: nowrap">{{conver.name.replace("Help_Desk-", "")}}</p>
+            <p style="font-weight: {{leftSide.lastMessFontWeight(conver)}};font-size: 16px;overflow: hidden; text-overflow: ellipsis; width: 80%; white-space: nowrap">{{conver.name.replace("Help_Desk-", "")}}</p>
             <div ng-if="conver.Messages[conver.Messages.length-1].type!='text'" style="color: gray; overflow: hidden; text-overflow: ellipsis; width: 80%; white-space: nowrap">{{leftSide.fileName(conver.Messages[conver.Messages.length-1].content)}}</div>
             <!-- <p ng-bind-html="conver.Messages[conver.Messages.length-1].content" ng-if="conver.Messages[conver.Messages.length-1].type=='text'" style="font-weight: {{leftSide.lastMessFontWeight(conver)}};overflow: hidden; text-overflow: ellipsis; width: 80%; white-space: nowrap"></p> -->
-            <div style="color: gray; overflow: hidden; text-overflow: ellipsis; width: 80%; white-space: nowrap" ng-if="conver.Messages[conver.Messages.length-1].type=='text'" >
-                <chat-message 
-                    text="conver.Messages[conver.Messages.length-1].content">
+            <div style=" " ng-if="conver.Messages[conver.Messages.length-1].type=='text'" >
+                <chat-message
+                    text="conver.Messages[conver.Messages.length-1].content"
+                    left="true" color="'gray'">
                 </chat-message>
             </div>
         </li>

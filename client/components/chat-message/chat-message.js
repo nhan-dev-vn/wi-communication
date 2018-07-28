@@ -160,6 +160,18 @@
             preProcess();
         }
 
+        self.$onChanges = function (obj) {
+            // preProcess();
+            // console.log('icon change');
+            preProcess();
+            // if(obj.fontWeight) {
+            //     self.fontWeight = obj.fontWeight.currentValue
+            //     console.log({'self.fontWeight':self.fontWeight});
+            //     console.log('change font-weigth')
+            // }
+            // console.log('change')
+        }
+
         function preProcess() {
             self.text = replaceText(self.text);
             // console.log({'self.text': self.text})
@@ -304,6 +316,19 @@
         function toHtmlWithIcon(className) {
             return `<div class="${className}"></div>`
         }
+        this.style = function() {
+            if(self.left) return {
+                "white-space": "pre-line",
+                "overflow": "hidden",
+                "text-overflow": "ellipsis",
+                "width": "80%",
+                "white-space": "nowrap",
+                "color": "gray"
+            }
+            else return {
+                "white-space": "pre-line"
+            };
+        }
     }
 
 
@@ -313,7 +338,9 @@
         controller: Controller,
         controllerAs: componentName,
         bindings: {
-            text: '<'
+            text: '<',
+            left: '<',
+            color: '<'
         }
     });
 
