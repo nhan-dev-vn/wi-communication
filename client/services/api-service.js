@@ -1,21 +1,20 @@
 let moduleName = 'apiServiceModule';
 let serviceName = 'apiService';
-const URL = 'http://chat.sflow.me';
-// const URL = 'http://127.0.0.1:5001';
-// const URL = 'http://192.168.11.109:5001';
-const LOGIN = URL + '/login';
-const REGISTER = URL + '/register';
-const GET_LIST_CONVERSATION = URL + '/api/list/conversation';
-const GET_CONVERSATION = URL + '/api/conversation';
-const POST_MESSAGE = URL + '/api/message/new';
-const SEEN_MESSAGE = URL + '/api/seenMessage'
-const UPLOAD = URL + '/api/upload';
-const THUMB = URL + '/api/thumb';
+
+const LOGIN = '/login';
+const REGISTER = '/register';
+const GET_LIST_CONVERSATION = '/api/list/conversation';
+const GET_CONVERSATION = '/api/conversation';
+const POST_MESSAGE = '/api/message/new';
+const SEEN_MESSAGE = '/api/seenMessage'
+const UPLOAD = '/api/upload';
+const THUMB = '/api/thumb';
 angular.module(moduleName, []).service(serviceName, function ($http, Upload) {
     let doPost = function(URL, token, data, cb) {
+
         $http({
             method: 'POST',
-            url: URL,
+            url: BASE_URL + URL,
             headers: {
                 'Authorization': token
             },
@@ -33,7 +32,7 @@ angular.module(moduleName, []).service(serviceName, function ($http, Upload) {
             cb();
         });
     }
-    this.URL = URL;
+    this.URL = BASE_URL;
     this.register = function(data, cb) {
         $http({
             method: 'POST',

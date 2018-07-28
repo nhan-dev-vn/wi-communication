@@ -17,9 +17,6 @@ function Controller(apiService, $timeout, ui){
         self.curConver = conver;
         ui.showConversation(conver)
         if(self.curConver.lastMessFontWeight=='bolder') {
-            //emit event seen message
-            ui.seenMessage()
-
             apiService.seenMessage({
                 idUser: self.user.id,
                 nameConversation: self.curConver.name
@@ -41,7 +38,7 @@ function Controller(apiService, $timeout, ui){
         $timeout(function() {
             let con = self.listConver.filter(function(conver) { return conver.id==data.idConversation; })[0];
             if(con.id==self.curConver.id && $('#text-message').is(':focus')) {
-                
+
             }
             else if(!con.lastMessFontWeight || con.lastMessFontWeight=="100") {
                 con.lastMessFontWeight = "bolder";

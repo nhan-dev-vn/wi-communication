@@ -264,5 +264,5 @@
     <!-- <div ng-bind-html="chatMessage.text" style="font-weight: {{chatMessage.fontWeight}}"></div> -->
     <!-- <div ng-if="chatMessage.fontWeight" ng-bind-html="chatMessage.text" style="font-weight: 1000"></div>
     <div ng-if="!chatMessage.fontWeight" ng-bind-html="chatMessage.text"></div> -->
-    <div ng-bind-html="chatMessage.text"></div>
+    <div ng-style="{{chatMessage.style()}}" style="{{chatMessage.color}}" ng-bind-html="chatMessage.text"></div>
 </div>

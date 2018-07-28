@@ -19,22 +19,25 @@ function Controller(apiService, $timeout, ui){
                 //console.log(convFrame.scrollHeight)
                 convFrame.scrollTo(0, convFrame.scrollHeight * 100)
             }, 500);
-            
+
         })
     }
     function send(e) {
-        let content = textMessage.val().split('\n').join('<br/>');
-        let message = {
-            content: preventXSS(content),
-            type: 'text',
-            idSender: self.user.id,
-            idConversation: self.curConver.id,
-            User: self.user,
-            sendAt: new Date((new Date()).getTime()),
-            nameConversation: self.curConver.name
-        };
-        apiService.postMessage(message, self.token, function (res) {
-        });
+        // let content = textMessage.val().split('\n').join('<br/>');
+        let content = textMessage.val();
+        if(content) {
+            let message = {
+                content: preventXSS(content),
+                type: 'text',
+                idSender: self.user.id,
+                idConversation: self.curConver.id,
+                User: self.user,
+                sendAt: new Date((new Date()).getTime()),
+                nameConversation: self.curConver.name
+            };
+            apiService.postMessage(message, self.token, function (res) {
+            });
+        }
         e && e.preventDefault();
         textMessage.val('');
     }
@@ -81,14 +84,14 @@ function Controller(apiService, $timeout, ui){
                         nameConversation: self.curConver.name
                     }
                     apiService.postMessage(message, self.token, (res) => {
-                            _done();
+                        _done();
                     });
                 } else {
                     console.log('UPLOAD FAIL');
                 }
             })
         }, (err) => {
-           
+
         });
     }
 
@@ -119,20 +122,20 @@ function Controller(apiService, $timeout, ui){
         const rule = {
             '<': {
                 regex: /\</g,
-                replaceStr: '%3C;'
-            }, 
+                replaceStr: '&lt'
+            },
             '>' : {
                 regex: /\>/g,
-                replaceStr: '%3E;'
+                replaceStr: '&gt'
             }
         };
-    
+
         text = text.replace(rule['>'].regex, rule['>'].replaceStr);
         text = text.replace(rule['<'].regex, rule['<'].replaceStr);
-        
-    
+
+
         return text;
-    
+
     }
 }
 

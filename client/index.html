@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>Help Desk Chat</title>
-        
+
         <link rel="stylesheet" href="vendor/css/bootstrap.min.css"></link>
         <link rel="stylesheet" href="vendor/css/style.css">
         <script src="vendor/js/jquery.min.js"></script>
@@ -12,7 +12,7 @@
         <script src="vendor/js/async.min.js"></script>
 
         <script src="vendor/js/socket.io.js"></script>
-        
+
         <script src="js/app.js"></script>
         <script src="services/api-service.js"></script>
         <script src="services/ui.js"></script>
@@ -21,8 +21,8 @@
         <script src="components/left-side/left-side.js"></script>
         <script src="components/right-side/right-side.js"></script>
         <script>
-            // var socket = io('http://192.168.11.109:5001');        
-            var socket = io('http://chat.sflow.me');  
+            var BASE_URL = 'http://127.0.0.1:5001';
+            var socket = io(BASE_URL);
         </script>
     </head>
     <body ng-app="wi-help-desk-chat" ng-controller="appCtrl">
@@ -50,7 +50,7 @@
                 <button class="btn-success" ng-click="register(nameRegister, pwRegister)">OK</button>
             </form>
         </div>
-        <div style="height: 100%;" 
+        <div style="height: 100%;"
             ng-show="isLogin" class="container">
                 <div style="height: 100%; border: 1px solid #eee; background: #f5f5f5;" class="col-sm-3">
                     <left-side user="user" list-conver="listConver" cur-conver="curConver" token="token" num-new-mess="numNewMess"></left-side>

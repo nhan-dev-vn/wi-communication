@@ -316,6 +316,19 @@
         function toHtmlWithIcon(className) {
             return `<div class="${className}"></div>`
         }
+        this.style = function() {
+            if(self.left) return {
+                "white-space": "pre-line",
+                "overflow": "hidden",
+                "text-overflow": "ellipsis",
+                "width": "80%",
+                "white-space": "nowrap",
+                "color": "gray"
+            }
+            else return {
+                "white-space": "pre-line"
+            };
+        }
     }
 
 
@@ -326,7 +339,8 @@
         controllerAs: componentName,
         bindings: {
             text: '<',
-            // fontWeight: '<'
+            left: '<',
+            color: '<'
         }
     });
 
