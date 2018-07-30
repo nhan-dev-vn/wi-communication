@@ -17,26 +17,69 @@ module.exports.getConversation = (req, res) => {
 				model: User
 			}
 		},
-        order: [[Message, 'sendAt', 'ASC']]
+		order: [[Message, 'sendAt', 'ASC']]
 	}).then(conver => {
 		if (conver) {
 			let numNewMess = 0;
+
 			conver.addUsers([req.decoded.id]);
-			getNewMess(req.decoded.id, req.body.name, function(rs) {
-				if(rs==1) {
+			getNewMess(req.decoded.id, req.body.name, function (rs) {
+				if (rs == 1) {
 					numNewMess++;
 					conver.dataValues.lastMessFontWeight = "bolder";
 				}
-				res.send(response(200, 'SUCCESSFULLY', {user: req.decoded, conver: conver, numNewMess: numNewMess}));
+				res.send(response(200, 'SUCCESSFULLY', { user: req.decoded, conver: conver, numNewMess: numNewMess }));
 			})
 		} else {
 			Conversation.create({
 				name: req.body.name
 			}).then(conver => {
-				if(conver) {
+				if (conver) {
 					conver.addUsers([req.decoded.id]);
-					if(conver.name.indexOf('Help_Desk')!=-1) (socket_io.socket).broadcast.emit('join-help-desk', conver);
-					res.send(response(200, 'SUCCESSFULLY', {user: req.decoded, conver: conver}));
+					if (req.body.listUser) {
+						let n = 0;
+						req.body.listUser.forEach(function (user) {
+							User.findOne({
+								username: user.username
+							}).then(user => {
+								if (user) {
+									n++;
+									conver.addUsers([user.dataValues.id]);
+									if (n == req.body.listUser.lenght - 1) {
+										if (conver.name.indexOf('Help_Desk') != -1) (socket_io.socket).broadcast.emit('join-help-desk', conver);
+										res.send(response(200, 'SUCCESSFULLY', { user: req.decoded, conver: conver }));
+									}
+								}
+								else {
+									User.create({
+										username: user.username,
+										role: user.role,
+										password: '=================='
+									}).then(user => {
+										if (user) {
+											n++;
+											conver.addUsers([user.dataValues.id]);
+											if (n == req.body.listUser.lenght - 1) {
+												if (conver.name.indexOf('Help_Desk') != -1) (socket_io.socket).broadcast.emit('join-help-desk', conver);
+												res.send(response(200, 'SUCCESSFULLY', { user: req.decoded, conver: conver }));
+											}
+										}
+										else {
+											res.send(response(400, 'CREATE LIST_USERS ERROR'));
+										}
+									})
+										.catch(err => {
+											res.send(response(400, 'SOMETHING WENT WRONG: ' + err));
+										});
+								}
+							}).catch(err => {
+								res.send(response(400, 'SOMETHING WENT WRONG: ' + err));
+							});
+						})
+					} else {
+						if (conver.name.indexOf('Help_Desk') != -1) (socket_io.socket).broadcast.emit('join-help-desk', conver);
+						res.send(response(200, 'SUCCESSFULLY', { user: req.decoded, conver: conver }));
+					}
 				}
 				else res.send(response(404, 'NOT FOUND & CREATE FAIL'));
 			}).catch(err => {
@@ -61,23 +104,23 @@ module.exports.getListConversation = (req, res) => {
 				model: User
 			}
 		},
-        order: [[Message, 'sendAt', 'ASC']]
+		order: [[Message, 'sendAt', 'ASC']]
 	}).then(list => {
 		if (list) {
 			let numNewMess = 0;
-			async.forEachOfSeries(list, function(conver, i, cb) {
+			async.forEachOfSeries(list, function (conver, i, cb) {
 				conver.addUsers([req.decoded.id]);
-				getNewMess(req.decoded.id, conver.name, function(rs) {
-					if(rs==1) {
+				getNewMess(req.decoded.id, conver.name, function (rs) {
+					if (rs == 1) {
 						conver.dataValues.lastMessFontWeight = "bolder";
 						numNewMess++;
 					}
 					cb();
 				})
-			}, function(err) {
-				if(err) res.send(response(400, 'SOMETHING WENT WRONG: ' + err));
+			}, function (err) {
+				if (err) res.send(response(400, 'SOMETHING WENT WRONG: ' + err));
 				else {
-					res.send(response(200, 'SUCCESSFULLY', {list: list, numNewMess: numNewMess}));
+					res.send(response(200, 'SUCCESSFULLY', { list: list, numNewMess: numNewMess }));
 				}
 			})
 		} else {
@@ -97,7 +140,7 @@ function getNewMess(idUser, nameConversation, cb) {
 			idUser: idUser
 		}
 	}).then(newMess => {
-		if(newMess) cb(1);
+		if (newMess) cb(1);
 		else cb(-1);
 	}).catch(err => {
 		cb(-1);

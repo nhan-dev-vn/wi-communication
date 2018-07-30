@@ -15,7 +15,7 @@ angular.module(moduleName, []).service(serviceName, function ($http, Upload) {
         $http({
             method: 'POST',
             url: BASE_URL + URL,
-            headers: {
+            headers: URL==LOGIN?{}:{
                 'Authorization': token
             },
             data: data
@@ -33,41 +33,26 @@ angular.module(moduleName, []).service(serviceName, function ($http, Upload) {
         });
     }
     this.URL = BASE_URL;
-    this.register = function(data, cb) {
-        $http({
-            method: 'POST',
-            url: REGISTER,
-            data: data
-        }).then(function successCallback(response) {
-            if (response.data.code != 200) {
-                console.error(response.data.reason);
-                cb();
-            } else {
-                cb(response.data.content);
-            }
-        }, function errorCallback(response) {
-            console.error(response);
-            if(toastr) toastr.error(response);
-            cb();
-        });
-    }
+    // this.register = function(data, cb) {
+    //     $http({
+    //         method: 'POST',
+    //         url: REGISTER,
+    //         data: data
+    //     }).then(function successCallback(response) {
+    //         if (response.data.code != 200) {
+    //             console.error(response.data.reason);
+    //             cb();
+    //         } else {
+    //             cb(response.data.content);
+    //         }
+    //     }, function errorCallback(response) {
+    //         console.error(response);
+    //         if(toastr) toastr.error(response);
+    //         cb();
+    //     });
+    // }
     this.login = function(data, cb) {
-        $http({
-            method: 'POST',
-            url: LOGIN,
-            data: data
-        }).then(function successCallback(response) {
-            if (response.data.code != 200) {
-                console.error(response.data.reason);
-                cb();
-            } else {
-                cb(response.data.content);
-            }
-        }, function errorCallback(response) {
-            console.error(response);
-            if(toastr) toastr.error(response);
-            cb();
-        });
+        doPost(LOGIN, '', data, cb)
     }
     this.getConversation = function(token, data, cb){
         doPost(GET_CONVERSATION, token, data, cb);
