@@ -50,7 +50,6 @@ function Controller(apiService, $timeout, ui){
         if(self.curConver.lastMessFontWeight=='bolder') {
             self.curConver.lastMessFontWeight='100';
             self.numNewMess--;
-            ui.seenMessage()
             apiService.seenMessage({
                 idUser: self.user.id,
                 nameConversation: self.curConver.name
