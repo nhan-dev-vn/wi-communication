@@ -12,6 +12,7 @@ module.exports.thumb = function(req, res) {
     var original_dir = path.join(__dirname, '../' + configPath.upload_dir + '/'+req.params.folder+'/'+req.params.fileName);
     var thumb_dir = path.join(__dirname, '../' + configPath.upload_dir + '/'+ req.params.folder+ '/thumb');
     directoryExists(thumb_dir, function(err, result) {
+        console.log('result', result);
         if(!result) {
             fs.mkdir(thumb_dir, function(err) {
                 if(err) {
